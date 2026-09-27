@@ -2651,112 +2651,6 @@
       }
     },
     {
-      "ts": "2026-09-24T02:55:25.231Z",
-      "season": 32,
-      "left": {
-        "name": "Sequoia",
-        "prefix": "SEQ",
-        "uuid": "ee860b7c-9a1d-49cf-9f19-ab673ba0f23b",
-        "level": 264,
-        "xpPercent": 25,
-        "territories": 101,
-        "wars": 164188,
-        "raids": 171556,
-        "seasonNumber": 32,
-        "seasonSr": 18397164,
-        "online": 16,
-        "memberCount": 150,
-        "perRaid": {
-          "grootslang": {
-            "rank": 1,
-            "sr": 18375010,
-            "completions": 43023,
-            "gambits": 496061
-          },
-          "nameless": {
-            "rank": 1,
-            "sr": 27229790,
-            "completions": 65469,
-            "gambits": 727915
-          },
-          "colossus": {
-            "rank": 1,
-            "sr": 11458450,
-            "completions": 28006,
-            "gambits": 303893
-          },
-          "orphion": {
-            "rank": 1,
-            "sr": 8208140,
-            "completions": 19495,
-            "gambits": 220512
-          },
-          "fruma": {
-            "rank": 1,
-            "sr": 6535540,
-            "completions": 15561,
-            "gambits": 175884
-          }
-        },
-        "aggDamageDealt": 8370690399056,
-        "aggDamageTaken": 18656293390,
-        "aggDeaths": 178918,
-        "aggGambits": 1185438,
-        "aggHealed": 791721646638
-      },
-      "right": {
-        "name": "Avicia",
-        "prefix": "AVO",
-        "uuid": "00ccf9d3-6670-4cd7-a447-f7fec684129d",
-        "level": 139,
-        "xpPercent": 89,
-        "territories": 73,
-        "wars": 230538,
-        "raids": 32161,
-        "seasonNumber": 32,
-        "seasonSr": 10652989,
-        "online": 13,
-        "memberCount": 148,
-        "perRaid": {
-          "grootslang": {
-            "rank": 4,
-            "sr": 3707460,
-            "completions": 9279,
-            "gambits": 96316
-          },
-          "nameless": {
-            "rank": 5,
-            "sr": 3620370,
-            "completions": 9174,
-            "gambits": 93859
-          },
-          "colossus": {
-            "rank": 3,
-            "sr": 3097260,
-            "completions": 7934,
-            "gambits": 79381
-          },
-          "orphion": {
-            "rank": 5,
-            "sr": 944420,
-            "completions": 2342,
-            "gambits": 24578
-          },
-          "fruma": {
-            "rank": 6,
-            "sr": 1359870,
-            "completions": 3429,
-            "gambits": 35595
-          }
-        },
-        "aggDamageDealt": 3226106270905,
-        "aggDamageTaken": 10565041781,
-        "aggDeaths": 72481,
-        "aggGambits": 409269,
-        "aggHealed": 300526911049
-      }
-    },
-    {
       "ts": "2026-09-24T03:00:52.642Z",
       "season": 32,
       "left": {
@@ -95611,9 +95505,115 @@
         "aggGambits": 420545,
         "aggHealed": 302158184174
       }
+    },
+    {
+      "ts": "2026-09-27T03:00:53.127Z",
+      "season": 32,
+      "left": {
+        "name": "Sequoia",
+        "prefix": "SEQ",
+        "uuid": "ee860b7c-9a1d-49cf-9f19-ab673ba0f23b",
+        "level": 264,
+        "xpPercent": 56,
+        "territories": 89,
+        "wars": 168550,
+        "raids": 172217,
+        "seasonNumber": 32,
+        "seasonSr": 21379391,
+        "online": 15,
+        "memberCount": 150,
+        "perRaid": {
+          "grootslang": {
+            "rank": 1,
+            "sr": 18499630,
+            "completions": 43323,
+            "gambits": 499383
+          },
+          "nameless": {
+            "rank": 1,
+            "sr": 27350370,
+            "completions": 65746,
+            "gambits": 731188
+          },
+          "colossus": {
+            "rank": 1,
+            "sr": 11469400,
+            "completions": 28032,
+            "gambits": 304186
+          },
+          "orphion": {
+            "rank": 1,
+            "sr": 8217860,
+            "completions": 19519,
+            "gambits": 220768
+          },
+          "fruma": {
+            "rank": 1,
+            "sr": 6550200,
+            "completions": 15597,
+            "gambits": 176275
+          }
+        },
+        "aggDamageDealt": 8325599466110,
+        "aggDamageTaken": 18392753887,
+        "aggDeaths": 184146,
+        "aggGambits": 1187968,
+        "aggHealed": 784937760634
+      },
+      "right": {
+        "name": "Avicia",
+        "prefix": "AVO",
+        "uuid": "00ccf9d3-6670-4cd7-a447-f7fec684129d",
+        "level": 140,
+        "xpPercent": 11,
+        "territories": 66,
+        "wars": 232970,
+        "raids": 32610,
+        "seasonNumber": 32,
+        "seasonSr": 12596700,
+        "online": 12,
+        "memberCount": 143,
+        "perRaid": {
+          "grootslang": {
+            "rank": 4,
+            "sr": 3731600,
+            "completions": 9336,
+            "gambits": 96965
+          },
+          "nameless": {
+            "rank": 5,
+            "sr": 3703180,
+            "completions": 9365,
+            "gambits": 96107
+          },
+          "colossus": {
+            "rank": 3,
+            "sr": 3098080,
+            "completions": 7936,
+            "gambits": 79403
+          },
+          "orphion": {
+            "rank": 5,
+            "sr": 971610,
+            "completions": 2410,
+            "gambits": 25274
+          },
+          "fruma": {
+            "rank": 6,
+            "sr": 1413940,
+            "completions": 3563,
+            "gambits": 37036
+          }
+        },
+        "aggDamageDealt": 3179874956096,
+        "aggDamageTaken": 10711664740,
+        "aggDeaths": 75271,
+        "aggGambits": 420545,
+        "aggHealed": 302158184174
+      }
     }
   ],
-  "updated": "2026-09-27T02:55:24.431Z",
+  "updated": "2026-09-27T03:00:53.127Z",
   "config": {
     "left": {
       "name": "Sequoia",
