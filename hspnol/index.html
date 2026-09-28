@@ -1194,12 +1194,15 @@ function renderHero(cur, snaps) {
     document.getElementById("trend-val").textContent = "—";
   }
 
-  // ETA based on 7d window (fallback 24h)
+  // ETA based on 7d window (fallback 24h, then whatever history exists — at least 1 h)
   const etaNum = document.getElementById("eta-value");
   const etaSub = document.getElementById("eta-sub");
   const window7 = snapshotsBefore(snaps, 7*86400_000);
-  const past = window7 || past24;
-  const usingDays = window7 ? 7 : 1;
+  const oldest = snaps[0];
+  const oldestH = (Date.now() - new Date(oldest.ts).getTime()) / 3600_000;
+  const past = window7 || past24 || (oldestH >= 1 ? oldest : null);
+  const usingDays = window7 ? 7 : past24 ? 1 : oldestH / 24;
+  const trendLbl = usingDays >= 1 ? `${usingDays}d` : `${Math.floor(oldestH)}h`;
   if (past) {
     const gapPast = nol(past, "left") - nol(past, "right");
     const dt = (new Date(snaps[snaps.length-1].ts) - new Date(past.ts)) / 86400_000;
@@ -1210,14 +1213,14 @@ function renderHero(cur, snaps) {
       const days = Math.abs(gap) / Math.abs(ratePerDay);
       etaNum.textContent = days < 1 ? `~ ${(days*24).toFixed(1)} h` : `~ ${days.toFixed(1)} d`;
       const closer = gap > 0 ? cur.right.name : cur.left.name;
-      etaSub.textContent = `${closer} closing the gap (${usingDays}d trend)`;
+      etaSub.textContent = `${closer} closing the gap (${trendLbl} trend)`;
     } else if (Math.abs(ratePerDay) < 1) {
       etaNum.textContent = "stable";
-      etaSub.textContent = `gap roughly flat (${usingDays}d trend)`;
+      etaSub.textContent = `gap roughly flat (${trendLbl} trend)`;
     } else {
       etaNum.textContent = "—";
       const ahead = gap > 0 ? cur.left.name : cur.right.name;
-      etaSub.textContent = `${ahead} pulling away (${usingDays}d trend)`;
+      etaSub.textContent = `${ahead} pulling away (${trendLbl} trend)`;
     }
   } else {
     etaNum.textContent = "—";
