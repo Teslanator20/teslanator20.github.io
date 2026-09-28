@@ -22,11 +22,12 @@ jobs:
           node-version: "20"
       - run: node poll.js
       - run: node poll.js aeqavo
+      - run: node poll.js hspnol
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add snapshots.json members_state.json events.json member_raids.json presence.json aeqavo/
+          git add snapshots.json members_state.json events.json member_raids.json presence.json aeqavo/ hspnol/
           if git diff --staged --quiet; then
             echo "No changes"
           else

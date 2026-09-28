@@ -13,6 +13,10 @@ via GitHub Pages.
 - `aeqavo/` — a second pairing (Aequitas vs Avicia) as its own page, same files one level
   down. `poll.js <dir>` reads that directory's `guilds.json` and writes its data there; the
   action runs the poller once per pairing.
+- `hspnol/` — Hesperides vs Sequoia in the NOL raid (Orphion's Nexus of Light). Same poller
+  and data files; the page races on the guilds' Orphion SR (`perRaid.orphion`), which is
+  all-time and untouched by the season scalar, so hero, gap charts and ETA use plain linear
+  trends over the full history.
 - `record/` — Sequoia against the all-time season record ([Shy] ShadowFall, Season 1,
   20,270,919). No poller of its own: the page reads the root `snapshots.json` and draws the
   record as a fixed line, with pace and a projected break date.
