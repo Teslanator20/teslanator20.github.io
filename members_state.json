@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T14:25:25.247Z",
+  "updated": "2026-09-30T14:30:40.234Z",
   "left": {
     "name": "Sequoia",
     "prefix": "SEQ",
@@ -22,8 +22,8 @@
         "uuid": "35f63806-4f34-4abb-99aa-ca54a5328696",
         "rank": "chief",
         "joined": "2025-01-02T15:50:20.838000Z",
-        "online": true,
-        "server": "EU21",
+        "online": false,
+        "server": null,
         "contributed": 56335717643511,
         "contributionRank": 1,
         "guildRaidsTotal": 22340
@@ -803,8 +803,8 @@
         "uuid": "35fdd70b-f844-4972-adf0-8575f726eb02",
         "rank": "strategist",
         "joined": "2026-09-23T06:02:54.548000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "AS1",
         "contributed": 803451525030,
         "contributionRank": 80,
         "guildRaidsTotal": 6687
@@ -1650,8 +1650,8 @@
   "right": {
     "name": "Avicia",
     "prefix": "AVO",
-    "online": 14,
-    "total": 145,
+    "online": 15,
+    "total": 146,
     "members": [
       {
         "username": "Krokofant",
@@ -1692,7 +1692,7 @@
         "rank": "chief",
         "joined": "2025-12-01T04:05:52.777000Z",
         "online": true,
-        "server": "NA16",
+        "server": "NA7",
         "contributed": 5414290282146,
         "contributionRank": 3,
         "guildRaidsTotal": 2473
@@ -1758,7 +1758,7 @@
         "rank": "chief",
         "joined": "2026-07-01T14:53:03.097000Z",
         "online": true,
-        "server": "NA9",
+        "server": "NA1",
         "contributed": 3330530593049,
         "contributionRank": 14,
         "guildRaidsTotal": 5966
@@ -2066,7 +2066,7 @@
         "rank": "strategist",
         "joined": "2026-03-18T12:34:42.380000Z",
         "online": true,
-        "server": "EU6",
+        "server": "EU18",
         "contributed": 4088080578968,
         "contributionRank": 10,
         "guildRaidsTotal": 1673
@@ -2429,7 +2429,7 @@
         "rank": "captain",
         "joined": "2026-09-05T15:22:52.083000Z",
         "online": true,
-        "server": "NA1",
+        "server": "NA16",
         "contributed": 399134016765,
         "contributionRank": 53,
         "guildRaidsTotal": 1294
@@ -3247,6 +3247,17 @@
         "contributed": 0,
         "contributionRank": 144,
         "guildRaidsTotal": 246
+      },
+      {
+        "username": "_Lykaios_",
+        "uuid": "2d892294-8a1e-4d5f-a67b-fe1de55d1670",
+        "rank": "recruit",
+        "joined": "2026-09-30T14:26:53.657000Z",
+        "online": true,
+        "server": "AS11",
+        "contributed": 0,
+        "contributionRank": 146,
+        "guildRaidsTotal": 0
       }
     ]
   }
