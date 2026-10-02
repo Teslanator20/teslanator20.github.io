@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-02T10:55:25.201Z",
+  "updated": "2026-10-02T11:00:53.278Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 2,
+    "online": 3,
     "total": 128,
     "members": [
       {
@@ -737,8 +737,8 @@
         "uuid": "6ed0cc45-8b4d-47b8-b1dc-433ebc93702b",
         "rank": "recruiter",
         "joined": "2026-09-05T18:26:23.297000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU1",
         "contributed": 14960560000,
         "contributionRank": 45,
         "guildRaidsTotal": 862
@@ -1420,7 +1420,7 @@
     "name": "Sequoia",
     "prefix": "SEQ",
     "online": 7,
-    "total": 148,
+    "total": 149,
     "members": [
       {
         "username": "RaidKeeper",
@@ -2087,8 +2087,8 @@
         "uuid": "ac5636c3-20da-44a1-9ad9-c443643f4d9d",
         "rank": "strategist",
         "joined": "2026-06-11T21:50:58.261000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "AS10",
         "contributed": 2744701644140,
         "contributionRank": 53,
         "guildRaidsTotal": 1067
@@ -2263,8 +2263,8 @@
         "uuid": "dfe48b48-3216-4faa-9e87-234e5676a1f9",
         "rank": "strategist",
         "joined": "2026-09-13T11:08:25.317000Z",
-        "online": true,
-        "server": "EU12",
+        "online": false,
+        "server": null,
         "contributed": 380991529611,
         "contributionRank": 100,
         "guildRaidsTotal": 217
@@ -2362,8 +2362,8 @@
         "uuid": "46e4937b-05b9-409d-9665-21a7070d97f7",
         "rank": "captain",
         "joined": "2026-06-30T03:07:39.617000Z",
-        "online": true,
-        "server": "NA13",
+        "online": false,
+        "server": null,
         "contributed": 2545127088966,
         "contributionRank": 55,
         "guildRaidsTotal": 1188
@@ -3049,6 +3049,17 @@
         "contributed": 0,
         "contributionRank": 148,
         "guildRaidsTotal": 0
+      },
+      {
+        "username": "sus929j",
+        "uuid": "69ce60f8-87a2-4242-9f8d-29456ebf95f1",
+        "rank": "recruit",
+        "joined": "2026-10-02T10:57:57.357000Z",
+        "online": true,
+        "server": "AS2",
+        "contributed": 0,
+        "contributionRank": 149,
+        "guildRaidsTotal": 9
       }
     ]
   }
