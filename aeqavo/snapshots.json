@@ -40917,112 +40917,6 @@
       }
     },
     {
-      "ts": "2026-10-01T15:35:27.445Z",
-      "season": 32,
-      "left": {
-        "name": "Aequitas",
-        "prefix": "Aeq",
-        "uuid": "0dd24dcc-370c-4e27-a1b4-2dfa92e76667",
-        "level": 190,
-        "xpPercent": 24,
-        "territories": 59,
-        "wars": 182767,
-        "raids": 93262,
-        "seasonNumber": 32,
-        "seasonSr": 13001622,
-        "online": 15,
-        "memberCount": 149,
-        "perRaid": {
-          "grootslang": {
-            "rank": 2,
-            "sr": 9301220,
-            "completions": 22213,
-            "gambits": 247998
-          },
-          "nameless": {
-            "rank": 2,
-            "sr": 24513020,
-            "completions": 58538,
-            "gambits": 655259
-          },
-          "colossus": {
-            "rank": 6,
-            "sr": 2559060,
-            "completions": 6478,
-            "gambits": 66299
-          },
-          "orphion": {
-            "rank": 10,
-            "sr": 632180,
-            "completions": 1587,
-            "gambits": 16411
-          },
-          "fruma": {
-            "rank": 3,
-            "sr": 1850710,
-            "completions": 4445,
-            "gambits": 49583
-          }
-        },
-        "aggDamageDealt": 5159047036571,
-        "aggDamageTaken": 12054561470,
-        "aggDeaths": 131179,
-        "aggGambits": 721023,
-        "aggHealed": 354470878562
-      },
-      "right": {
-        "name": "Avicia",
-        "prefix": "AVO",
-        "uuid": "00ccf9d3-6670-4cd7-a447-f7fec684129d",
-        "level": 140,
-        "xpPercent": 33,
-        "territories": 32,
-        "wars": 233023,
-        "raids": 33019,
-        "seasonNumber": 32,
-        "seasonSr": 12650784,
-        "online": 15,
-        "memberCount": 146,
-        "perRaid": {
-          "grootslang": {
-            "rank": 4,
-            "sr": 3735670,
-            "completions": 9346,
-            "gambits": 97074
-          },
-          "nameless": {
-            "rank": 5,
-            "sr": 3750680,
-            "completions": 9475,
-            "gambits": 97396
-          },
-          "colossus": {
-            "rank": 3,
-            "sr": 3133570,
-            "completions": 8023,
-            "gambits": 80346
-          },
-          "orphion": {
-            "rank": 5,
-            "sr": 982010,
-            "completions": 2435,
-            "gambits": 25547
-          },
-          "fruma": {
-            "rank": 6,
-            "sr": 1483180,
-            "completions": 3736,
-            "gambits": 38877
-          }
-        },
-        "aggDamageDealt": 3220927198433,
-        "aggDamageTaken": 10933194095,
-        "aggDeaths": 75565,
-        "aggGambits": 425527,
-        "aggHealed": 308434149663
-      }
-    },
-    {
       "ts": "2026-10-01T15:40:31.594Z",
       "season": 32,
       "left": {
@@ -133453,9 +133347,115 @@
         "aggGambits": 430667,
         "aggHealed": 313379351881
       }
+    },
+    {
+      "ts": "2026-10-04T15:40:29.026Z",
+      "season": 33,
+      "left": {
+        "name": "Aequitas",
+        "prefix": "Aeq",
+        "uuid": "0dd24dcc-370c-4e27-a1b4-2dfa92e76667",
+        "level": 190,
+        "xpPercent": 52,
+        "territories": 51,
+        "wars": 183324,
+        "raids": 93777,
+        "seasonNumber": 33,
+        "seasonSr": 142633,
+        "online": 12,
+        "memberCount": 150,
+        "perRaid": {
+          "grootslang": {
+            "rank": 2,
+            "sr": 9348290,
+            "completions": 22328,
+            "gambits": 249235
+          },
+          "nameless": {
+            "rank": 2,
+            "sr": 24633240,
+            "completions": 58824,
+            "gambits": 658492
+          },
+          "colossus": {
+            "rank": 6,
+            "sr": 2571620,
+            "completions": 6509,
+            "gambits": 66629
+          },
+          "orphion": {
+            "rank": 10,
+            "sr": 640440,
+            "completions": 1607,
+            "gambits": 16633
+          },
+          "fruma": {
+            "rank": 4,
+            "sr": 1876310,
+            "completions": 4508,
+            "gambits": 50262
+          }
+        },
+        "aggDamageDealt": 5350591805950,
+        "aggDamageTaken": 12480877586,
+        "aggDeaths": 135882,
+        "aggGambits": 745469,
+        "aggHealed": 414597309303
+      },
+      "right": {
+        "name": "Avicia",
+        "prefix": "AVO",
+        "uuid": "00ccf9d3-6670-4cd7-a447-f7fec684129d",
+        "level": 140,
+        "xpPercent": 51,
+        "territories": 59,
+        "wars": 233465,
+        "raids": 33388,
+        "seasonNumber": 33,
+        "seasonSr": 170902,
+        "online": 19,
+        "memberCount": 141,
+        "perRaid": {
+          "grootslang": {
+            "rank": 4,
+            "sr": 3742270,
+            "completions": 9363,
+            "gambits": 97242
+          },
+          "nameless": {
+            "rank": 5,
+            "sr": 3795060,
+            "completions": 9583,
+            "gambits": 98585
+          },
+          "colossus": {
+            "rank": 3,
+            "sr": 3142170,
+            "completions": 8045,
+            "gambits": 80571
+          },
+          "orphion": {
+            "rank": 5,
+            "sr": 998440,
+            "completions": 2474,
+            "gambits": 25986
+          },
+          "fruma": {
+            "rank": 6,
+            "sr": 1555080,
+            "completions": 3920,
+            "gambits": 40771
+          }
+        },
+        "aggDamageDealt": 3296950928758,
+        "aggDamageTaken": 11038729534,
+        "aggDeaths": 76047,
+        "aggGambits": 430667,
+        "aggHealed": 313379351881
+      }
     }
   ],
-  "updated": "2026-10-04T15:35:23.137Z",
+  "updated": "2026-10-04T15:40:29.026Z",
   "config": {
     "left": {
       "name": "Aequitas",
