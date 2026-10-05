@@ -2207,6 +2207,10 @@ function sanitizeSnapshots(snaps) {
     const lSr = s.left?.seasonSr  ?? 0;
     const rSr = s.right?.seasonSr ?? 0;
     if (lSr <= 0 || rSr <= 0) continue;
+    // Mid-rollover the API can report one guild in the new season and the other still in the
+    // old one; such a reading would poison the drop check for the rest of the season.
+    if (s.left?.seasonNumber != null && s.right?.seasonNumber != null &&
+        s.left.seasonNumber !== s.right.seasonNumber) continue;
 
     if (lastSeason != null && s.season !== lastSeason) {
       lastGoodLeftSr = 0; lastGoodRightSr = 0;
