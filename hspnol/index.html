@@ -643,7 +643,7 @@
     <div class="hero-eta">
       <div class="lbl">ETA to tied</div>
       <div class="num" id="eta-value">—</div>
-      <div class="sub" id="eta-sub">based on 7d trend</div>
+      <div class="sub" id="eta-sub">based on selected range</div>
     </div>
   </section>
 
@@ -1196,14 +1196,13 @@ function renderHero(cur, snaps) {
     document.getElementById("trend-val").textContent = "—";
   }
 
-  // ETA based on 7d window (fallback 24h, then whatever history exists — at least 1 h)
+  // ETA over the window picked in the range bar ("Season" = all history we have)
   const etaNum = document.getElementById("eta-value");
   const etaSub = document.getElementById("eta-sub");
-  const window7 = snapshotsBefore(snaps, 7*86400_000);
-  const past = window7;
-  // window7 falls back to the oldest snapshot, so label the span actually covered
+  const past = snapshotsBefore(snaps, rangeDays * 86400_000);
+  // falls back to the oldest snapshot when history is shorter, so label the span actually covered
   const spanH = past ? (Date.now() - new Date(past.ts).getTime()) / 3600_000 : 0;
-  const trendLbl = spanH >= 24 ? `${Math.min(Math.round(spanH / 24 * 10) / 10, 7)}d` : `${Math.floor(spanH)}h`;
+  const trendLbl = spanH >= 24 ? `${Math.min(Math.round(spanH / 24 * 10) / 10, rangeDays)}d` : `${Math.floor(spanH)}h`;
   if (past) {
     const gapPast = nol(past, "left") - nol(past, "right");
     const dt = (new Date(snaps[snaps.length-1].ts) - new Date(past.ts)) / 86400_000;
