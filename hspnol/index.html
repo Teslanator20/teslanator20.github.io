@@ -932,6 +932,8 @@ function snapshotsBefore(snaps, msAgo) {
     const t = new Date(s.ts).getTime();
     if (t <= target && (!best || t > new Date(best.ts).getTime())) best = s;
   }
+  // History shorter than the window: use the oldest snapshot, so "7d" means "as far back as we have".
+  if (!best && snaps.length > 1) best = snaps[0];
   return best;
 }
 function getNum(s, path) {
@@ -1198,11 +1200,10 @@ function renderHero(cur, snaps) {
   const etaNum = document.getElementById("eta-value");
   const etaSub = document.getElementById("eta-sub");
   const window7 = snapshotsBefore(snaps, 7*86400_000);
-  const oldest = snaps[0];
-  const oldestH = (Date.now() - new Date(oldest.ts).getTime()) / 3600_000;
-  const past = window7 || past24 || (oldestH >= 1 ? oldest : null);
-  const usingDays = window7 ? 7 : past24 ? 1 : oldestH / 24;
-  const trendLbl = usingDays >= 1 ? `${usingDays}d` : `${Math.floor(oldestH)}h`;
+  const past = window7;
+  // window7 falls back to the oldest snapshot, so label the span actually covered
+  const spanH = past ? (Date.now() - new Date(past.ts).getTime()) / 3600_000 : 0;
+  const trendLbl = spanH >= 24 ? `${Math.min(Math.round(spanH / 24 * 10) / 10, 7)}d` : `${Math.floor(spanH)}h`;
   if (past) {
     const gapPast = nol(past, "left") - nol(past, "right");
     const dt = (new Date(snaps[snaps.length-1].ts) - new Date(past.ts)) / 86400_000;
