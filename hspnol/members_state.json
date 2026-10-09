@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-09T04:10:31.917Z",
+  "updated": "2026-10-09T04:15:30.700Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 13,
+    "online": 12,
     "total": 130,
     "members": [
       {
@@ -23,8 +23,8 @@
         "rank": "chief",
         "joined": "2025-06-22T15:36:41.631000Z",
         "online": true,
-        "server": "NA17",
-        "contributed": 523138488053,
+        "server": "NA20",
+        "contributed": 523504780688,
         "contributionRank": 2,
         "guildRaidsTotal": 4418
       },
@@ -99,8 +99,8 @@
         "uuid": "3c3887e8-caa9-4b2b-83e2-9f6faa1113fb",
         "rank": "strategist",
         "joined": "2026-02-18T03:07:40.370000Z",
-        "online": true,
-        "server": "NA7",
+        "online": false,
+        "server": null,
         "contributed": 411098772605,
         "contributionRank": 4,
         "guildRaidsTotal": 2260
@@ -154,8 +154,8 @@
         "uuid": "fdf09b10-14b4-4866-bd9e-739c4603f339",
         "rank": "captain",
         "joined": "2026-09-07T18:43:02.253000Z",
-        "online": true,
-        "server": "NA7",
+        "online": false,
+        "server": null,
         "contributed": 346128999217,
         "contributionRank": 6,
         "guildRaidsTotal": 2598
@@ -188,8 +188,8 @@
         "rank": "captain",
         "joined": "2026-09-06T15:53:59.594000Z",
         "online": true,
-        "server": "NA17",
-        "contributed": 199652170124,
+        "server": "NA20",
+        "contributed": 200018462759,
         "contributionRank": 12,
         "guildRaidsTotal": 1827
       },
@@ -814,8 +814,8 @@
         "uuid": "51d80555-44de-43ae-8684-eb09cb9e625a",
         "rank": "recruiter",
         "joined": "2026-08-12T02:41:10.730000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA6",
         "contributed": 15304367124,
         "contributionRank": 53,
         "guildRaidsTotal": 51
@@ -849,7 +849,7 @@
         "joined": "2026-09-19T15:29:07.419000Z",
         "online": true,
         "server": "NA6",
-        "contributed": 14938529649,
+        "contributed": 14938530867,
         "contributionRank": 56,
         "guildRaidsTotal": 50
       },
@@ -1101,7 +1101,7 @@
         "rank": "recruiter",
         "joined": "2026-09-25T02:54:06.853000Z",
         "online": true,
-        "server": "NA10",
+        "server": "NA11",
         "contributed": 1640959705,
         "contributionRank": 99,
         "guildRaidsTotal": 5
@@ -1410,7 +1410,7 @@
         "joined": "2026-10-09T00:18:19.024000Z",
         "online": true,
         "server": "NA7",
-        "contributed": 230524,
+        "contributed": 230906,
         "contributionRank": 121,
         "guildRaidsTotal": 0
       },
@@ -1441,7 +1441,7 @@
   "right": {
     "name": "Sequoia",
     "prefix": "SEQ",
-    "online": 21,
+    "online": 20,
     "total": 148,
     "members": [
       {
@@ -1484,7 +1484,7 @@
         "joined": "2023-03-14T19:21:11.556000Z",
         "online": true,
         "server": "NA3",
-        "contributed": 38918564213964,
+        "contributed": 38921155993077,
         "contributionRank": 3,
         "guildRaidsTotal": 19150
       },
@@ -1780,8 +1780,8 @@
         "rank": "strategist",
         "joined": "2025-03-10T04:22:52.496000Z",
         "online": true,
-        "server": "NA6",
-        "contributed": 26418428511164,
+        "server": "NA13",
+        "contributed": 26421020290277,
         "contributionRank": 7,
         "guildRaidsTotal": 11084
       },
@@ -1858,7 +1858,7 @@
         "joined": "2026-08-24T20:47:46.514000Z",
         "online": false,
         "server": null,
-        "contributed": 9330404806800,
+        "contributed": 9332996585913,
         "contributionRank": 21,
         "guildRaidsTotal": 0
       },
@@ -1934,8 +1934,8 @@
         "rank": "strategist",
         "joined": "2026-05-05T21:40:46.605000Z",
         "online": true,
-        "server": "NA6",
-        "contributed": 6134919086047,
+        "server": "NA13",
+        "contributed": 6137510865160,
         "contributionRank": 30,
         "guildRaidsTotal": 5567
       },
@@ -1979,7 +1979,7 @@
         "joined": "2026-07-15T21:51:02.320000Z",
         "online": true,
         "server": "NA3",
-        "contributed": 4367148579713,
+        "contributed": 4369740358826,
         "contributionRank": 37,
         "guildRaidsTotal": 0
       },
@@ -2154,8 +2154,8 @@
         "rank": "strategist",
         "joined": "2026-07-16T17:00:48.189000Z",
         "online": true,
-        "server": "NA14",
-        "contributed": 1977527463219,
+        "server": "NA17",
+        "contributed": 1980119242332,
         "contributionRank": 58,
         "guildRaidsTotal": 3633
       },
@@ -2166,7 +2166,7 @@
         "joined": "2026-07-25T14:29:21.373000Z",
         "online": true,
         "server": "NA3",
-        "contributed": 1959422403942,
+        "contributed": 1962014183055,
         "contributionRank": 59,
         "guildRaidsTotal": 1117
       },
@@ -2325,6 +2325,17 @@
         "guildRaidsTotal": 9
       },
       {
+        "username": "Zhiraok",
+        "uuid": "aeb7706b-44bc-437e-8551-f13b7cac7de7",
+        "rank": "strategist",
+        "joined": "2026-10-06T19:32:56.736000Z",
+        "online": false,
+        "server": null,
+        "contributed": 15550674678,
+        "contributionRank": 136,
+        "guildRaidsTotal": 0
+      },
+      {
         "username": "cobbler_john",
         "uuid": "99dd220b-4a20-4d16-ac85-8e6af280ec6a",
         "rank": "strategist",
@@ -2364,7 +2375,7 @@
         "joined": "2026-06-30T03:07:39.617000Z",
         "online": true,
         "server": "NA3",
-        "contributed": 3428923766499,
+        "contributed": 3431515545612,
         "contributionRank": 43,
         "guildRaidsTotal": 1532
       },
@@ -2539,7 +2550,7 @@
         "rank": "captain",
         "joined": "2026-09-01T22:12:08.311000Z",
         "online": true,
-        "server": "NA7",
+        "server": "EU3",
         "contributed": 463928461227,
         "contributionRank": 90,
         "guildRaidsTotal": 340
@@ -2671,7 +2682,7 @@
         "rank": "recruiter",
         "joined": "2026-08-26T23:36:05.197000Z",
         "online": true,
-        "server": "NA1",
+        "server": "EU1",
         "contributed": 323972389125,
         "contributionRank": 97,
         "guildRaidsTotal": 182
@@ -2682,8 +2693,8 @@
         "rank": "recruiter",
         "joined": "2026-09-15T01:24:16.028000Z",
         "online": true,
-        "server": "NA6",
-        "contributed": 285153343272,
+        "server": "NA13",
+        "contributed": 287745122385,
         "contributionRank": 98,
         "guildRaidsTotal": 374
       },
@@ -2769,8 +2780,8 @@
         "uuid": "d1ba7a43-ec06-44ed-8973-7def90166c4e",
         "rank": "recruiter",
         "joined": "2026-09-28T21:20:47.992000Z",
-        "online": true,
-        "server": "NA10",
+        "online": false,
+        "server": null,
         "contributed": 36284907582,
         "contributionRank": 124,
         "guildRaidsTotal": 22
@@ -2836,7 +2847,7 @@
         "rank": "recruit",
         "joined": "2026-10-05T22:58:59.495000Z",
         "online": true,
-        "server": "NA15",
+        "server": "NA30",
         "contributed": 259177911300,
         "contributionRank": 100,
         "guildRaidsTotal": 1684
@@ -2880,7 +2891,7 @@
         "rank": "recruit",
         "joined": "2026-09-08T20:42:38.038000Z",
         "online": true,
-        "server": "NA2",
+        "server": "NA7",
         "contributed": 147738450515,
         "contributionRank": 110,
         "guildRaidsTotal": 58
@@ -3016,17 +3027,6 @@
         "contributed": 18364894312,
         "contributionRank": 134,
         "guildRaidsTotal": 7
-      },
-      {
-        "username": "Zhiraok",
-        "uuid": "aeb7706b-44bc-437e-8551-f13b7cac7de7",
-        "rank": "recruit",
-        "joined": "2026-10-06T19:32:56.736000Z",
-        "online": false,
-        "server": null,
-        "contributed": 15550674678,
-        "contributionRank": 136,
-        "guildRaidsTotal": 0
       },
       {
         "username": "finkster42",
