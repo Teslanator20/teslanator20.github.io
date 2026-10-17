@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-17T10:20:32.726Z",
+  "updated": "2026-10-17T10:25:24.001Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 7,
+    "online": 8,
     "total": 130,
     "members": [
       {
@@ -891,8 +891,8 @@
         "uuid": "6ed0cc45-8b4d-47b8-b1dc-433ebc93702b",
         "rank": "recruiter",
         "joined": "2026-09-05T18:26:23.297000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU31",
         "contributed": 14960560000,
         "contributionRank": 59,
         "guildRaidsTotal": 862
@@ -1538,7 +1538,7 @@
         "rank": "chief",
         "joined": "2026-01-28T16:30:19.875000Z",
         "online": true,
-        "server": "NA3",
+        "server": "NA2",
         "contributed": 14265299068686,
         "contributionRank": 13,
         "guildRaidsTotal": 6422
@@ -1834,8 +1834,8 @@
         "uuid": "a217e80c-944a-4231-9056-617f6f2f1ac9",
         "rank": "strategist",
         "joined": "2026-07-14T19:53:28.121000Z",
-        "online": true,
-        "server": "EU2",
+        "online": false,
+        "server": null,
         "contributed": 12189137168439,
         "contributionRank": 15,
         "guildRaidsTotal": 8811
@@ -1911,8 +1911,8 @@
         "uuid": "7792daec-00d8-49ce-b44e-fe97c5ec4e75",
         "rank": "strategist",
         "joined": "2025-02-02T19:42:24.668000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU9",
         "contributed": 7379974685198,
         "contributionRank": 28,
         "guildRaidsTotal": 3211
@@ -2501,6 +2501,17 @@
         "guildRaidsTotal": 221
       },
       {
+        "username": "Shiirossa",
+        "uuid": "fc6f2468-8f31-4546-ab27-ce19939d974f",
+        "rank": "captain",
+        "joined": "2026-08-18T12:42:21.850000Z",
+        "online": true,
+        "server": "AS18",
+        "contributed": 487254473244,
+        "contributionRank": 84,
+        "guildRaidsTotal": 227
+      },
+      {
         "username": "JohnBleu",
         "uuid": "d226e2f0-8153-4797-9734-46a391f8261d",
         "rank": "captain",
@@ -2508,19 +2519,8 @@
         "online": false,
         "server": null,
         "contributed": 484737857234,
-        "contributionRank": 84,
-        "guildRaidsTotal": 378
-      },
-      {
-        "username": "Shiirossa",
-        "uuid": "fc6f2468-8f31-4546-ab27-ce19939d974f",
-        "rank": "captain",
-        "joined": "2026-08-18T12:42:21.850000Z",
-        "online": true,
-        "server": "AS18",
-        "contributed": 484662694131,
         "contributionRank": 85,
-        "guildRaidsTotal": 227
+        "guildRaidsTotal": 378
       },
       {
         "username": "SheProffsAlot",
@@ -2562,7 +2562,7 @@
         "joined": "2026-10-02T10:57:57.357000Z",
         "online": true,
         "server": "NA7",
-        "contributed": 82938557499,
+        "contributed": 82938557590,
         "contributionRank": 116,
         "guildRaidsTotal": 41
       },
