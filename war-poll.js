@@ -23,7 +23,10 @@ const SNAPSHOTS = "snapshots.json";
 const TIMEOUT_MS = 25_000;
 const UA = "race-tracker/2.0 (war)";
 const GUILD_EVERY = 3;          // fetch member data every Nth loop iteration
-const SERIES_HEARTBEAT = 300;   // write a series point at least this often (s), even if flat
+const SERIES_HEARTBEAT = 300;
+// More wars than this between two member polls (~1 min) is not a real gain but a hidden
+// counter becoming visible, so it rebaselines instead of counting.
+const MAX_WAR_JUMP = 50;   // write a series point at least this often (s), even if flat
 
 const arg = (name, def) => {
   const i = process.argv.indexOf(`--${name}`);
@@ -73,10 +76,30 @@ function memberRows(guild) {
     if (!group || typeof group !== "object" || Array.isArray(group)) continue;
     for (const [username, m] of Object.entries(group)) {
       if (!m?.uuid) continue;
-      out.push({ uuid: m.uuid, name: username, wars: Number(m.globalData?.wars ?? 0), online: !!m.online });
+      // a player with API privacy on has no war counter: null, not 0
+      const w = m.globalData?.wars;
+      out.push({ uuid: m.uuid, name: username, wars: Number.isFinite(Number(w)) && w !== null ? Number(w) : null, online: !!m.online });
     }
   }
   return out;
+}
+
+// Before v2, a hidden war counter (API privacy) was stored as 0, so switching privacy off
+// counted the player's whole career as wars "since tracking". Rebuild each baseline from
+// visible values only, skipping jumps that can't be real gains.
+function migrateHidden(members) {
+  for (const m of Object.values(members.members)) {
+    const vis = [[m.t0, m.w0], ...m.h].filter(([, w]) => w > 0);
+    if (vis.length === m.h.length + 1) continue;
+    if (!vis.length) { m.w0 = null; m.w = null; m.h = []; m.hidden = true; continue; }
+    let prev = vis[0][1], counted = 0;
+    const kept = [];
+    for (const [t, w] of vis.slice(1)) {
+      if (w >= prev && w - prev <= MAX_WAR_JUMP) { counted += w - prev; if (w !== prev) kept.push([t, w]); }
+      prev = w;
+    }
+    m.w0 = prev - counted; m.w = prev; m.h = kept;
+  }
 }
 
 async function main() {
@@ -88,6 +111,7 @@ async function main() {
   const series = (await loadJson(SERIES, null)) || await seedSeries(cfg);
   const changes = await loadJson(CHANGES, { since: null, changes: [] });
   const members = await loadJson(MEMBERS, { since: null, members: {} });
+  if (members.v !== 2) { migrateHidden(members); members.v = 2; }
 
   const last = series.points[series.points.length - 1] || [];
   let wars = { [sides[0]]: last[3] ?? null, [sides[1]]: last[4] ?? null };
@@ -116,7 +140,18 @@ async function main() {
             } else {
               m.n = r.name;
               if (m.g !== c.prefix) { m.g = c.prefix; m.w0 = r.wars; m.t0 = nowSec; m.h = []; }
-              if (r.wars !== m.w) { m.h.push([nowSec, r.wars]); m.w = r.wars; }
+              if (r.wars == null) {
+                m.hidden = true;                  // keep the last known count while hidden
+              } else if (m.w0 == null || m.w == null || r.wars - m.w > MAX_WAR_JUMP) {
+                // first visible value (API privacy switched off) or an impossible jump: start
+                // counting from here; wars fought while hidden can't be attributed
+                m.w0 = r.wars - (m.w != null && m.w0 != null ? m.w - m.w0 : 0);
+                m.w = r.wars;
+                delete m.hidden;
+              } else {
+                if (r.wars !== m.w) { m.h.push([nowSec, r.wars]); m.w = r.wars; }
+                delete m.hidden;
+              }
               delete m.left;
             }
           }
