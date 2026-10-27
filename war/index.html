@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>SEQ vs AVO — War</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+<script>
+  // set the theme before first paint (same key as the race page)
+  (() => {
+    let stored = null;
+    try { stored = localStorage.getItem("theme"); } catch {}
+    const dark = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", stored || (dark ? "dark" : "light"));
+  })();
+</script>
+<style>
+  :root {
+    --paper: #f4efe1; --card: #fffaec; --ink: #1c1814; --ink-soft: #3d3a33;
+    --muted: #8d8472; --rule: #d6cdb5; --rule-strong: #1c1814;
+    --left: #3a8b3a; --right: #2f6fb8; --down: #b94a4a; --neutral: #a59c88;
+    --grid: rgba(28,24,20,0.08); --hl: rgba(185,74,74,0.08);
+  }
+  html[data-theme="dark"] {
+    --paper: #16140f; --card: #1d1a14; --ink: #ece6d2; --ink-soft: #c8c1ac;
+    --muted: #8a8270; --rule: #3a342a; --rule-strong: #ece6d2;
+    --left: #4caa4c; --right: #5591d4; --down: #e07878; --neutral: #6b6455;
+    --grid: rgba(236,230,210,0.08); --hl: rgba(224,120,120,0.10);
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--paper); }
+  body {
+    margin: 0; color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'tnum' 1; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 48px 36px 80px; position: relative; }
+  .topbar { position: absolute; top: 28px; right: 36px; display: flex; gap: 8px; }
+  .pill {
+    background: transparent; border: 1px solid var(--rule); border-radius: 999px;
+    padding: 7px 14px; font: 500 11px/1 'Inter', sans-serif; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--muted); cursor: pointer; text-decoration: none;
+  }
+  .pill:hover { color: var(--ink); border-color: var(--ink); }
+  .eyebrow { font: 600 11px/1 'Inter'; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 11px; }
+  h1 {
+    margin: 0; font-family: 'Fraunces', Georgia, serif; font-size: clamp(32px, 5.5vw, 52px);
+    line-height: 1.04; letter-spacing: -.015em; font-variation-settings: 'opsz' 96, 'wght' 500;
+  }
+  h1 .l { color: var(--left); } h1 .r { color: var(--right); }
+  h1 em { font-style: italic; color: var(--muted); font-variation-settings: 'opsz' 96, 'wght' 400; }
+  .meta {
+    margin-top: 14px; padding: 11px 0; border-top: 1px solid var(--rule-strong); border-bottom: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; gap: 10px 26px; font: 500 11px/1.3 'Inter'; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .meta strong { color: var(--ink); font-weight: 600; letter-spacing: .04em; }
+  h2 {
+    margin: 46px 0 6px; font: 600 11.5px/1 'Inter'; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+  .lede { margin: 8px 0 16px; color: var(--ink-soft); font-size: 13.5px; line-height: 1.5; max-width: 760px; }
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 18px 20px; }
+
+  /* scoreboard */
+  .score { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; }
+  .tile { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; }
+  .tile .lbl { font: 600 10.5px/1.2 'Inter'; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .tile .vs { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .tile .num {
+    font-family: 'Fraunces', Georgia, serif; font-size: 34px; line-height: 1;
+    font-variation-settings: 'opsz' 96, 'wght' 500; font-variant-numeric: tabular-nums lining-nums;
+  }
+  .tile .side { display: flex; flex-direction: column; gap: 6px; }
+  .tile .side.r { align-items: flex-end; text-align: right; }
+  .tile .tag { font: 600 10.5px/1 'Inter'; letter-spacing: .12em; display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); }
+  .tile .tag i { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
+  .tile .sub { margin-top: 10px; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+  .lead { font-weight: 700; }
+
+  .chart { position: relative; height: 300px; }
+  .chart.sm { height: 240px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .legend { display: flex; gap: 18px; margin: 0 0 10px; font-size: 12px; color: var(--ink-soft); flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend i.box { height: 10px; width: 10px; border-radius: 2px; }
+  .legend i.dash { background: repeating-linear-gradient(90deg, var(--down) 0 4px, transparent 4px 7px) !important; }
+  .ctitle { font: 600 12.5px/1.3 'Inter'; color: var(--ink); margin: 0 0 4px; }
+  .csub { font-size: 11.5px; color: var(--muted); margin: 0 0 12px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; font: 600 10px/1.2 'Inter'; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); padding: 8px 8px; border-bottom: 1px solid var(--rule); white-space: nowrap;
+  }
+  td { padding: 7px 8px; border-bottom: 1px dotted var(--rule); vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.hq td { background: var(--hl); }
+  .scroll { max-height: 420px; overflow: auto; }
+  .tablewrap { overflow-x: auto; }
+  .chip { display: inline-block; padding: 2px 7px; border-radius: 999px; font: 600 10.5px/1.4 'Inter'; letter-spacing: .06em; border: 1px solid var(--rule); color: var(--ink-soft); white-space: nowrap; }
+  .chip.l { border-color: var(--left); } .chip.r { border-color: var(--right); }
+  .chip.hq { border-color: var(--down); color: var(--down); }
+  .muted { color: var(--muted); }
+  .win { font-weight: 700; }
+  .note { font-size: 11.5px; color: var(--muted); margin-top: 10px; line-height: 1.45; }
+  .hqcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .hqname { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-variation-settings: 'opsz' 24, 'wght' 540; }
+  .hqline { margin-top: 8px; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+  #tip {
+    position: fixed; pointer-events: none; z-index: 10; display: none;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px;
+    font-size: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.12); color: var(--ink);
+  }
+  .heat { display: grid; grid-template-columns: 44px repeat(24, 1fr); gap: 2px; font-size: 10.5px; }
+  .heat .h { text-align: center; color: var(--muted); }
+  .heat .rl { color: var(--ink-soft); font-weight: 600; align-self: center; }
+  .heat .c { height: 28px; border-radius: 3px; outline: none; }
+  .heat .c:hover, .heat .c:focus { box-shadow: 0 0 0 2px var(--ink); }
+
+  @media (max-width: 860px) {
+    .wrap { padding: 72px 16px 60px; }
+    .topbar { top: 18px; right: 16px; }
+    .score { grid-template-columns: 1fr 1fr; }
+    .grid2, .hqcards { grid-template-columns: 1fr; }
+    .heat { grid-template-columns: 34px repeat(24, 1fr); font-size: 8.5px; }
+    .heat .c { height: 22px; }
+  }
+  @media (max-width: 420px) { .score { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="pill" href="../">Race</a>
+    <button class="pill" id="theme-toggle" aria-label="Theme wechseln">Dark</button>
+  </div>
+
+  <div class="eyebrow">Wynncraft · Territory War</div>
+  <h1><span class="l">Sequoia</span> <em>vs</em> <span class="r">Avicia</span></h1>
+  <div class="meta">
+    <span>Krieg seit <strong id="m-start">—</strong></span>
+    <span>Dauer <strong id="m-dur">—</strong></span>
+    <span>Exakter Territory-Log seit <strong id="m-track">—</strong></span>
+    <span>Stand <strong id="m-upd">—</strong></span>
+  </div>
+
+  <section class="score" id="score"></section>
+
+  <h2>Territories</h2>
+  <p class="lede">Anzahl Territories pro Gilde. Die gestrichelte Linie ist die Wipe-Grenze: Wer darunter fällt, gilt als gewiped.</p>
+  <div class="card">
+    <div class="legend" id="lg-terr"></div>
+    <div class="chart"><canvas id="c-terr"></canvas></div>
+  </div>
+
+  <h2>Wer performt wann stärker</h2>
+  <p class="lede">Wars pro Stunde aus dem War-Zähler der Gilde (jeder gewonnene War zählt, auch gegen andere Gilden). Links der Verlauf, rechts der Schnitt nach Uhrzeit (deutsche Zeit).</p>
+  <div class="grid2">
+    <div class="card">
+      <p class="ctitle">Wars pro Stunde</p><p class="csub">Verlauf seit Kriegsbeginn</p>
+      <div class="legend" id="lg-wph"></div>
+      <div class="chart sm"><canvas id="c-wph"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="ctitle">Ø Wars nach Uhrzeit</p><p class="csub">Durchschnitt je Stunde des Tages</p>
+      <div class="legend" id="lg-hod"></div>
+      <div class="chart sm"><canvas id="c-hod"></canvas></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <p class="ctitle">Wer führt wann? Territory-Vorsprung nach Wochentag × Uhrzeit</p>
+    <p class="csub">Ø Differenz der Territories (SEQ − AVO). Grün = SEQ vorn, Blau = AVO vorn, Grau = ausgeglichen.</p>
+    <div class="heat" id="heat"></div>
+  </div>
+
+  <h2>Tagesbilanz</h2>
+  <div class="card tablewrap"><table id="t-days"></table></div>
+  <p class="note">Tage nach deutscher Zeit. „Ø Terr.“ ist zeitgewichtet. Fett markiert den besseren Wert des Tages.</p>
+
+  <h2>Snipes</h2>
+  <p class="lede">Ein Snipe ist hier eine Territory-Übernahme direkt vom Gegner. Seit Beginn des exakten Logs wird jeder Besitzerwechsel mit Zeitstempel aus der API erfasst. Davor sind die Zahlen aus den 5-Minuten-Snapshots <em>geschätzt</em>: Verliert SEQ im selben Intervall Territories, die AVO gewinnt, zählt das als Snipe. Das zählt eher zu wenig.</p>
+  <div class="grid2">
+    <div class="card">
+      <p class="ctitle">Snipes nach Uhrzeit</p><p class="csub">Wann wird am öftesten gesniped (deutsche Zeit)</p>
+      <div class="legend" id="lg-snh"></div>
+      <div class="chart sm"><canvas id="c-snh"></canvas></div>
+    </div>
+    <div class="card">
+      <p class="ctitle">Snipes pro Stunde</p><p class="csub">Verlauf seit Kriegsbeginn</p>
+      <div class="legend" id="lg-snt"></div>
+      <div class="chart sm"><canvas id="c-snt"></canvas></div>
+    </div>
+  </div>
+
+  <h2>HQs</h2>
+  <div class="hqcards" id="hq"></div>
+
+  <h2>Besitzerwechsel-Log</h2>
+  <p class="lede">Alle exakt geloggten Wechsel, an denen SEQ oder AVO beteiligt ist. HQ-Wechsel sind rot hinterlegt. „Zurückerobert“ heißt: Das Territory wechselte zwischen zwei Polls weg und wieder zurück.</p>
+  <div class="card scroll"><table id="t-log"></table></div>
+
+  <h2>Wipes</h2>
+  <p class="lede" id="wipe-lede"></p>
+  <div class="card tablewrap"><table id="t-wipes"></table></div>
+
+  <h2>Warcount pro Spieler</h2>
+  <p class="lede" id="mem-lede"></p>
+  <div class="grid2">
+    <div class="card scroll"><table id="t-mem-l"></table></div>
+    <div class="card scroll"><table id="t-mem-r"></table></div>
+  </div>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const TZ = "Europe/Berlin";
+const fmtDT = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+const fmtT = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, hour: "2-digit", minute: "2-digit" });
+const fmtD = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit" });
+const fmtAxis = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, day: "2-digit", month: "2-digit", hour: "2-digit" });
+const nf = new Intl.NumberFormat("de-DE");
+const partsCache = new Map();
+function berlin(tSec) {
+  // {key: YYYY-MM-DD, hour, dow 0=Mo}
+  const hk = Math.floor(tSec / 3600);
+  let v = partsCache.get(hk);
+  if (v) return v;
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", weekday: "short", hourCycle: "h23" })
+    .formatToParts(new Date(tSec * 1000)).map(x => [x.type, x.value]));
+  v = { key: `${p.year}-${p.month}-${p.day}`, hour: Number(p.hour), dow: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].indexOf(p.weekday) };
+  partsCache.set(hk, v);
+  return v;
+}
+const dt = t => fmtDT.format(new Date(t * 1000));
+function dur(s) {
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+  return d ? `${d} T ${h} h` : h ? `${h} h ${m} min` : `${m} min`;
+}
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v; else if (k === "style") e.style.cssText = v; else e.setAttribute(k, v);
+  }
+  for (const k of kids) if (k != null) e.append(k instanceof Node ? k : document.createTextNode(String(k)));
+  return e;
+}
+
+// ── theme ─────────────────────────────────────
+const themeBtn = document.getElementById("theme-toggle");
+const syncThemeBtn = () => themeBtn.textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "Light" : "Dark";
+syncThemeBtn();
+themeBtn.addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("theme", next); } catch {}
+  syncThemeBtn();
+  if (DATA) render(DATA);
+});
+
+// ── tooltip for the heatmap ───────────────────
+const tip = document.getElementById("tip");
+function showTip(e, nodes) {
+  tip.replaceChildren(...nodes);
+  tip.style.display = "block";
+  const r = (e.target.getBoundingClientRect ? e.target.getBoundingClientRect() : { left: e.clientX, bottom: e.clientY });
+  const x = Math.min(window.innerWidth - tip.offsetWidth - 8, Math.max(8, r.left));
+  tip.style.left = x + "px"; tip.style.top = (r.bottom + 6) + "px";
+}
+const hideTip = () => tip.style.display = "none";
+
+// ── analysis ──────────────────────────────────
+function analyse(cfg, series, changes, members, state) {
+  const L = cfg.left.prefix, R = cfg.right.prefix;
+  const start = Math.floor(new Date(cfg.start).getTime() / 1000);
+  const all = series.points;
+  // last point at or before the start acts as the baseline
+  let i0 = 0;
+  for (let i = 0; i < all.length; i++) if (all[i][0] <= start) i0 = i;
+  const pts = all.slice(i0);
+  const track = changes.since ?? Infinity;
+  const now = pts[pts.length - 1][0];
+
+  // snipes: estimated before the exact log, exact afterwards
+  const snipes = []; // {t, by: L|R, n, exact, hq, terr}
+  for (let i = 1; i < pts.length; i++) {
+    const [t, l, r] = pts[i], [, pl, pr] = pts[i - 1];
+    if (t > track || t <= start) continue;
+    const dl = l - pl, dr = r - pr;
+    const lTook = Math.min(Math.max(dl, 0), Math.max(-dr, 0));
+    const rTook = Math.min(Math.max(dr, 0), Math.max(-dl, 0));
+    if (lTook) snipes.push({ t, by: L, n: lTook, exact: false });
+    if (rTook) snipes.push({ t, by: R, n: rTook, exact: false });
+  }
+  for (const c of changes.changes) {
+    if (c.t < start) continue;
+    if ((c.from === L && c.to === R) || (c.from === R && c.to === L)) snipes.push({ t: c.t, by: c.to, n: 1, exact: true, hq: c.hq, terr: c.terr });
+  }
+  const snipeTotal = side => snipes.filter(s => s.by === side).reduce((a, s) => a + s.n, 0);
+  const snipeExact = side => snipes.filter(s => s.by === side && s.exact).length;
+
+  // wipes (falling below the threshold) and time-weighted territory stats
+  const wipes = [];
+  const open = {};
+  let leadSecs = { [L]: 0, [R]: 0 }, terrSecs = { [L]: 0, [R]: 0 }, span = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const [t, l, r] = pts[i];
+    const [pt, pl, pr] = pts[i - 1];
+    const d = t - pt;
+    if (pt >= start) {
+      span += d; terrSecs[L] += pl * d; terrSecs[R] += pr * d;
+      if (pl > pr) leadSecs[L] += d; else if (pr > pl) leadSecs[R] += d;
+    }
+    for (const [side, v, pv] of [[L, l, pl], [R, r, pr]]) {
+      if (t <= start) continue;
+      if (v < cfg.wipeBelow && pv >= cfg.wipeBelow) open[side] = { side, t, min: v };
+      else if (v < cfg.wipeBelow && open[side]) open[side].min = Math.min(open[side].min, v);
+      if (v >= cfg.wipeBelow && open[side]) { wipes.push({ ...open[side], end: t }); delete open[side]; }
+    }
+  }
+  for (const w of Object.values(open)) wipes.push({ ...w, end: null });
+  wipes.sort((a, b) => a.t - b.t);
+
+  // hourly buckets (absolute) for wars and snipes
+  const hour = t => Math.floor(t / 3600) * 3600;
+  const wph = new Map();
+  for (let i = 1; i < pts.length; i++) {
+    const [t, , , lw, rw] = pts[i], [, , , plw, prw] = pts[i - 1];
+    if (t <= start || lw == null || plw == null) continue;
+    const h = hour(t);
+    const b = wph.get(h) || { [L]: 0, [R]: 0 };
+    b[L] += Math.max(0, lw - plw); b[R] += Math.max(0, rw - prw);
+    wph.set(h, b);
+  }
+  const hours = [];
+  for (let h = hour(start); h <= hour(now); h += 3600) hours.push(h);
+  const snph = new Map();
+  for (const s of snipes) { const h = hour(s.t); const b = snph.get(h) || { [L]: 0, [R]: 0 }; b[s.by] += s.n; snph.set(h, b); }
+
+  // hour-of-day profiles (Berlin)
+  const hod = Array.from({ length: 24 }, () => ({ [L]: 0, [R]: 0, n: 0, sL: 0, sR: 0 }));
+  for (const h of hours) {
+    const b = wph.get(h); if (!b) continue;
+    const x = hod[berlin(h).hour]; x[L] += b[L]; x[R] += b[R]; x.n++;
+  }
+  for (const s of snipes) { const x = hod[berlin(s.t).hour]; if (s.by === L) x.sL += s.n; else x.sR += s.n; }
+
+  // weekday × hour territory lead
+  const heat = Array.from({ length: 7 }, () => Array.from({ length: 24 }, () => ({ sum: 0, secs: 0 })));
+  for (let i = 1; i < pts.length; i++) {
+    const [t] = pts[i], [pt, pl, pr] = pts[i - 1];
+    if (pt < start) continue;
+    const b = berlin(pt), c = heat[b.dow][b.hour];
+    c.sum += (pl - pr) * (t - pt); c.secs += t - pt;
+  }
+
+  // daily table
+  const days = new Map();
+  const day = k => { if (!days.has(k)) days.set(k, { key: k, w: { [L]: 0, [R]: 0 }, s: { [L]: 0, [R]: 0 }, ts: { [L]: 0, [R]: 0 }, secs: 0, on: { [L]: 0, [R]: 0 }, wipes: { [L]: 0, [R]: 0 } }); return days.get(k); };
+  for (let i = 1; i < pts.length; i++) {
+    const [t, , , lw, rw, lo, ro] = pts[i], [pt, pl, pr, plw, prw] = pts[i - 1];
+    if (pt < start) continue;
+    const d = day(berlin(pt).key);
+    if (lw != null && plw != null) { d.w[L] += Math.max(0, lw - plw); d.w[R] += Math.max(0, rw - prw); }
+    d.ts[L] += pl * (t - pt); d.ts[R] += pr * (t - pt); d.secs += t - pt;
+    d.on[L] = Math.max(d.on[L], lo ?? 0); d.on[R] = Math.max(d.on[R], ro ?? 0);
+  }
+  for (const s of snipes) day(berlin(s.t).key).s[s.by] += s.n;
+  for (const w of wipes) day(berlin(w.t).key).wipes[w.side]++;
+
+  const first = pts.find(p => p[0] >= start) || pts[0], last = pts[pts.length - 1];
+  const warsSince = { [L]: (last[3] ?? 0) - (pts[0][3] ?? 0), [R]: (last[4] ?? 0) - (pts[0][4] ?? 0) };
+
+  // HQs: current owner + every logged HQ change
+  const hqs = Object.entries(state.terr || {}).filter(([, t]) => t.h && (t.g === L || t.g === R)).map(([name, t]) => ({ name, ...t }));
+  const hqLog = changes.changes.filter(c => c.hq && c.t >= start);
+
+  // members
+  const mem = { [L]: [], [R]: [] };
+  for (const [uuid, m] of Object.entries(members.members || {})) {
+    if (m.g in mem) mem[m.g].push({ uuid, name: m.n, since: m.w - m.w0, total: m.w, left: !!m.left, h: m.h, t0: m.t0 });
+  }
+  for (const k of [L, R]) mem[k].sort((a, b) => b.since - a.since || b.total - a.total);
+
+  return { L, R, start, track, now, pts, first, last, snipes, snipeTotal, snipeExact, wipes, hours, wph, snph, hod, heat,
+           days: [...days.values()], warsSince, leadSecs, terrSecs, span, hqs, hqLog, mem, membersSince: members.since };
+}
+
+// ── rendering ─────────────────────────────────
+let DATA = null;
+const charts = {};
+function chartBase(extra = {}) {
+  const grid = css("--grid"), muted = css("--muted");
+  return {
+    responsive: true, maintainAspectRatio: false, animation: false,
+    interaction: { mode: "index", intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: css("--card"), titleColor: css("--ink"), bodyColor: css("--ink"),
+        borderColor: css("--rule"), borderWidth: 1, padding: 10, boxWidth: 10, boxHeight: 2, usePointStyle: false,
+      },
+    },
+    scales: {
+      x: { grid: { color: grid, drawTicks: false }, ticks: { color: muted, font: { size: 10.5 }, maxRotation: 0, autoSkipPadding: 18 }, border: { display: false } },
+      y: { grid: { color: grid, drawTicks: false }, ticks: { color: muted, font: { size: 10.5 }, padding: 6 }, border: { display: false }, beginAtZero: true },
+    },
+    ...extra,
+  };
+}
+// vertical hairline on hover for line charts
+const crosshair = {
+  id: "crosshair",
+  afterDatasetsDraw(chart) {
+    const a = chart.tooltip?.getActiveElements?.();
+    if (!a || !a.length) return;
+    const x = a[0].element.x, { top, bottom } = chart.chartArea, ctx = chart.ctx;
+    ctx.save(); ctx.strokeStyle = css("--muted"); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke(); ctx.restore();
+  },
+};
+function mk(id, cfg) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), cfg);
+}
+function legend(id, items) {
+  document.getElementById(id).replaceChildren(...items.map(([label, color, kind]) =>
+    el("span", {}, el("i", { class: kind || "", style: kind === "dash" ? "" : `background:${color}` }), label)));
+}
+
+function render(D) {
+  const { cfg } = D, A = D.a, L = A.L, R = A.R;
+  const cl = css("--left"), cr = css("--right");
+  const nameL = cfg.left.name, nameR = cfg.right.name;
+
+  document.getElementById("m-start").textContent = dt(A.start);
+  document.getElementById("m-dur").textContent = dur(A.now - A.start);
+  document.getElementById("m-track").textContent = Number.isFinite(A.track) ? dt(A.track) : "—";
+  document.getElementById("m-upd").textContent = dt(A.now);
+
+  // scoreboard
+  const tile = (label, lv, rv, sub, higherWins = true, fmt = v => nf.format(v)) => {
+    const lw = higherWins ? lv > rv : lv < rv, rw = higherWins ? rv > lv : rv < lv;
+    return el("div", { class: "tile" },
+      el("div", { class: "lbl" }, label),
+      el("div", { class: "vs" },
+        el("div", { class: "side" }, el("span", { class: "tag" }, el("i", { style: `background:${cl}` }), L), el("span", { class: "num" + (lw ? " lead" : "") }, fmt(lv))),
+        el("div", { class: "side r" }, el("span", { class: "tag" }, R, el("i", { style: `background:${cr}` })), el("span", { class: "num" + (rw ? " lead" : "") }, fmt(rv)))),
+      sub ? el("div", { class: "sub" }, sub) : null);
+  };
+  const wl = A.wipes.filter(w => w.side === L).length, wr = A.wipes.filter(w => w.side === R).length;
+  const pct = v => Math.round(100 * v / Math.max(1, A.span)) + " %";
+  document.getElementById("score").replaceChildren(
+    tile("Territories jetzt", A.last[1], A.last[2], `Ø seit Kriegsbeginn: ${L} ${(A.terrSecs[L] / Math.max(1, A.span)).toFixed(1)} · ${R} ${(A.terrSecs[R] / Math.max(1, A.span)).toFixed(1)}`),
+    tile("Wars seit Kriegsbeginn", A.warsSince[L], A.warsSince[R], `Zeit in Führung (Territories): ${L} ${pct(A.leadSecs[L])} · ${R} ${pct(A.leadSecs[R])}`),
+    tile("Snipes vom Gegner", A.snipeTotal(L), A.snipeTotal(R), `davon exakt geloggt: ${L} ${A.snipeExact(L)} · ${R} ${A.snipeExact(R)}, der Rest geschätzt`),
+    tile(`Wipes (unter ${cfg.wipeBelow} Terr.)`, wl, wr, "Weniger ist besser", false),
+  );
+
+  // territories over time
+  const xs = A.pts.filter(p => p[0] >= A.start - 300);
+  mk("c-terr", {
+    type: "line",
+    data: {
+      labels: xs.map(p => p[0]),
+      datasets: [
+        { label: nameL, data: xs.map(p => p[1]), borderColor: cl, backgroundColor: cl, borderWidth: 2, pointRadius: 0, stepped: true },
+        { label: nameR, data: xs.map(p => p[2]), borderColor: cr, backgroundColor: cr, borderWidth: 2, pointRadius: 0, stepped: true },
+        { label: "Wipe-Grenze", data: xs.map(() => cfg.wipeBelow), borderColor: css("--down"), borderWidth: 1, borderDash: [4, 3], pointRadius: 0 },
+      ],
+    },
+    options: chartBase({
+      scales: { ...chartBase().scales, x: { ...chartBase().scales.x, ticks: { ...chartBase().scales.x.ticks, callback(v) { return fmtAxis.format(new Date(this.getLabelForValue(v) * 1000)); } } } },
+      plugins: { ...chartBase().plugins, tooltip: { ...chartBase().plugins.tooltip, filter: i => i.datasetIndex < 2, callbacks: { title: it => dt(it[0].label) } } },
+    }),
+    plugins: [crosshair],
+  });
+  legend("lg-terr", [[nameL, cl], [nameR, cr], [`Wipe-Grenze (${cfg.wipeBelow})`, null, "dash"]]);
+
+  // wars per hour (absolute)
+  const hrs = A.hours;
+  const hourTick = function (v) { const t = this.getLabelForValue(v); return fmtAxis.format(new Date(t * 1000)); };
+  const barOpts = (titleFn, tickFn) => chartBase({
+    scales: { ...chartBase().scales, x: { ...chartBase().scales.x, grid: { display: false }, ticks: { ...chartBase().scales.x.ticks, callback: tickFn } } },
+    plugins: { ...chartBase().plugins, tooltip: { ...chartBase().plugins.tooltip, callbacks: { title: titleFn } } },
+  });
+  const bar = (label, data, color) => ({ label, data, backgroundColor: color, borderRadius: { topLeft: 3, topRight: 3 }, borderSkipped: "bottom", barPercentage: .9, categoryPercentage: .8 });
+  mk("c-wph", {
+    type: "bar",
+    data: { labels: hrs, datasets: [bar(nameL, hrs.map(h => A.wph.get(h)?.[L] ?? 0), cl), bar(nameR, hrs.map(h => A.wph.get(h)?.[R] ?? 0), cr)] },
+    options: barOpts(it => `${dt(it[0].label)} – ${fmtT.format(new Date((+it[0].label + 3600) * 1000))}`, hourTick),
+  });
+  legend("lg-wph", [[nameL, cl, "box"], [nameR, cr, "box"]]);
+
+  const hodLabels = Array.from({ length: 24 }, (_, i) => i);
+  mk("c-hod", {
+    type: "bar",
+    data: { labels: hodLabels, datasets: [
+      bar(nameL, A.hod.map(x => x.n ? +(x[L] / x.n).toFixed(1) : 0), cl),
+      bar(nameR, A.hod.map(x => x.n ? +(x[R] / x.n).toFixed(1) : 0), cr)] },
+    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 Uhr`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
+  });
+  legend("lg-hod", [[nameL, cl, "box"], [nameR, cr, "box"]]);
+
+  // snipes by hour of day + over time
+  mk("c-snh", {
+    type: "bar",
+    data: { labels: hodLabels, datasets: [bar(`${L} snipet ${R}`, A.hod.map(x => x.sL), cl), bar(`${R} snipet ${L}`, A.hod.map(x => x.sR), cr)] },
+    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 Uhr`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
+  });
+  legend("lg-snh", [[`${L} snipet ${R}`, cl, "box"], [`${R} snipet ${L}`, cr, "box"]]);
+  mk("c-snt", {
+    type: "bar",
+    data: { labels: hrs, datasets: [bar(`${L} snipet ${R}`, hrs.map(h => A.snph.get(h)?.[L] ?? 0), cl), bar(`${R} snipet ${L}`, hrs.map(h => A.snph.get(h)?.[R] ?? 0), cr)] },
+    options: barOpts(it => `${dt(it[0].label)} – ${fmtT.format(new Date((+it[0].label + 3600) * 1000))}`, hourTick),
+  });
+  legend("lg-snt", [[`${L} snipet ${R}`, cl, "box"], [`${R} snipet ${L}`, cr, "box"]]);
+
+  // weekday × hour heatmap of territory lead (diverging: green ↔ gray ↔ blue)
+  const heat = document.getElementById("heat");
+  const dows = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  let maxAbs = 1;
+  for (const row of A.heat) for (const c of row) if (c.secs) maxAbs = Math.max(maxAbs, Math.abs(c.sum / c.secs));
+  const mix = (a, b, f) => `color-mix(in oklab, ${b} ${Math.round(f * 100)}%, ${a})`;
+  const kids = [el("div")];
+  for (let h = 0; h < 24; h++) kids.push(el("div", { class: "h" }, h % 3 === 0 ? String(h).padStart(2, "0") : ""));
+  A.heat.forEach((row, d) => {
+    if (!row.some(c => c.secs)) return;
+    kids.push(el("div", { class: "rl" }, dows[d]));
+    row.forEach((c, h) => {
+      const v = c.secs ? c.sum / c.secs : null;
+      const bg = v == null ? "transparent" : v >= 0 ? mix(css("--neutral"), cl, Math.min(1, v / maxAbs) * .9 + .1 * (v > 0)) : mix(css("--neutral"), cr, Math.min(1, -v / maxAbs) * .9 + .1);
+      const cell = el("div", { class: "c", tabindex: v == null ? "-1" : "0", style: `background:${bg};${v == null ? "border:1px dashed var(--rule)" : ""}` });
+      const tipNodes = () => [el("div", { style: "font-weight:700" }, v == null ? "keine Daten" : `${v > 0 ? "+" : ""}${v.toFixed(1)} Territories`),
+        el("div", { class: "muted" }, `${dows[d]} ${String(h).padStart(2, "0")}:00–${String((h + 1) % 24).padStart(2, "0")}:00 · ${v == null ? "" : v > 0.5 ? L + " vorn" : v < -0.5 ? R + " vorn" : "ausgeglichen"}`)];
+      cell.addEventListener("pointermove", e => showTip(e, tipNodes()));
+      cell.addEventListener("focus", e => showTip(e, tipNodes()));
+      cell.addEventListener("pointerleave", hideTip); cell.addEventListener("blur", hideTip);
+      kids.push(cell);
+    });
+  });
+  heat.replaceChildren(...kids);
+
+  // daily table
+  const th = (t, n) => el("th", { class: n ? "n" : "" }, t);
+  const tdn = (v, win) => el("td", { class: "n" + (win ? " win" : "") }, v);
+  const dayRows = A.days.map(d => {
+    const [y, m, dd] = d.key.split("-");
+    const tl = d.secs ? d.ts[L] / d.secs : 0, tr = d.secs ? d.ts[R] / d.secs : 0;
+    return el("tr", {},
+      el("td", {}, fmtD.format(new Date(Date.UTC(+y, +m - 1, +dd, 12)))),
+      tdn(nf.format(d.w[L]), d.w[L] > d.w[R]), tdn(nf.format(d.w[R]), d.w[R] > d.w[L]),
+      tdn(d.s[L], d.s[L] > d.s[R]), tdn(d.s[R], d.s[R] > d.s[L]),
+      tdn(tl.toFixed(1), tl > tr), tdn(tr.toFixed(1), tr > tl),
+      tdn(d.wipes[L], d.wipes[L] < d.wipes[R]), tdn(d.wipes[R], d.wipes[R] < d.wipes[L]),
+      tdn(d.on[L]), tdn(d.on[R]));
+  });
+  document.getElementById("t-days").replaceChildren(
+    el("thead", {}, el("tr", {}, th("Tag"), th(`Wars ${L}`, 1), th(`Wars ${R}`, 1), th(`Snipes ${L}`, 1), th(`Snipes ${R}`, 1),
+      th(`Ø Terr. ${L}`, 1), th(`Ø Terr. ${R}`, 1), th(`Wipes ${L}`, 1), th(`Wipes ${R}`, 1), th(`Max online ${L}`, 1), th(`Max online ${R}`, 1))),
+    el("tbody", {}, ...dayRows.reverse()));
+
+  // HQs
+  const hqCard = h => {
+    const log = A.hqLog.filter(c => c.terr === h.name);
+    const lost = log.filter(c => c.from === h.g && c.to !== h.g).length;
+    const lastC = log[log.length - 1];
+    return el("div", { class: "card" },
+      el("div", { class: "eyebrow" }, `HQ von ${h.g === L ? nameL : nameR}`),
+      el("div", { class: "hqname" }, h.name),
+      el("div", { class: "hqline" }, `Im Besitz seit ${h.a ? dt(Math.floor(new Date(h.a).getTime() / 1000)) : "—"}`),
+      el("div", { class: "hqline" }, `${log.length} Wechsel geloggt${lost ? `, davon ${lost}× verloren` : ""}${lastC ? ` · zuletzt ${dt(lastC.t)} (${lastC.from ?? "?"} → ${lastC.to ?? "?"})` : ""}`));
+  };
+  const hqList = [L, R].map(g => A.hqs.find(h => h.g === g)).filter(Boolean);
+  document.getElementById("hq").replaceChildren(...(hqList.length ? hqList.map(hqCard) : [el("div", { class: "card muted" }, "Noch keine Territory-Daten.")]));
+
+  // change log
+  const chip = g => el("span", { class: "chip" + (g === L ? " l" : g === R ? " r" : "") }, g ?? "—");
+  const logRows = D.changes.changes.filter(c => c.t >= A.start).slice().reverse().map(c =>
+    el("tr", { class: c.hq ? "hq" : "" },
+      el("td", {}, dt(c.t)),
+      el("td", {}, c.terr, c.hq ? el("span", { class: "chip hq", style: "margin-left:6px" }, "HQ") : null),
+      el("td", {}, chip(c.from), " → ", chip(c.to)),
+      el("td", { class: "muted" }, c.retake ? "zurückerobert" : (c.from === L && c.to === R) || (c.from === R && c.to === L) ? "Snipe" : "Dritte Gilde")));
+  document.getElementById("t-log").replaceChildren(
+    el("thead", {}, el("tr", {}, th("Zeit"), th("Territory"), th("Wechsel"), th("Art"))),
+    el("tbody", {}, ...(logRows.length ? logRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, "Noch keine Wechsel geloggt."))])));
+
+  // wipes
+  document.getElementById("wipe-lede").textContent =
+    `Ein Wipe zählt, sobald eine Gilde unter ${cfg.wipeBelow} Territories fällt. Er endet, wenn sie wieder ${cfg.wipeBelow} oder mehr hält.`;
+  const wipeRows = A.wipes.slice().reverse().map(w => el("tr", {},
+    el("td", {}, chip(w.side)), el("td", {}, dt(w.t)), el("td", {}, w.end ? dt(w.end) : "läuft noch"),
+    el("td", { class: "n" }, dur((w.end ?? A.now) - w.t)), el("td", { class: "n" }, w.min)));
+  document.getElementById("t-wipes").replaceChildren(
+    el("thead", {}, el("tr", {}, th("Gilde"), th("Gewiped um"), th("Wieder ≥ " + cfg.wipeBelow), th("Dauer", 1), th("Tiefstand", 1))),
+    el("tbody", {}, ...(wipeRows.length ? wipeRows : [el("tr", {}, el("td", { colspan: "5", class: "muted" }, "Noch kein Wipe."))])));
+
+  // members
+  document.getElementById("mem-lede").textContent =
+    `„Seit Tracking“ zählt die Wars jedes Spielers ab ${A.membersSince ? dt(A.membersSince) : "—"}. Ältere Werte pro Spieler gibt die API nicht her. „Gesamt“ ist der War-Zähler über die ganze Spielzeit.`;
+  for (const [id, g, name] of [["t-mem-l", L, nameL], ["t-mem-r", R, nameR]]) {
+    const rows = A.mem[g].map((m, i) => el("tr", {},
+      el("td", { class: "n muted" }, i + 1),
+      el("td", {}, m.name, m.left ? el("span", { class: "muted" }, " (raus)") : null),
+      el("td", { class: "n" + (i < 3 && m.since > 0 ? " win" : "") }, nf.format(m.since)),
+      el("td", { class: "n muted" }, nf.format(m.total))));
+    document.getElementById(id).replaceChildren(
+      el("thead", {}, el("tr", {}, th("#", 1), th(name), th("Seit Tracking", 1), th("Gesamt", 1))),
+      el("tbody", {}, ...rows));
+  }
+}
+
+async function load() {
+  const get = p => fetch(p + "?t=" + Date.now()).then(r => r.ok ? r.json() : null);
+  const [cfg, series, changes, members, state] = await Promise.all(["config.json", "series.json", "changes.json", "members.json", "state.json"].map(get));
+  if (!cfg || !series?.points?.length) { document.getElementById("score").textContent = "Noch keine Daten."; return; }
+  const ch = changes || { since: null, changes: [] };
+  DATA = { cfg, changes: ch, a: analyse(cfg, series, ch, members || { members: {} }, state || { terr: {} }) };
+  render(DATA);
+}
+load();
+setInterval(load, 5 * 60_000);
+</script>
+</body>
+</html>

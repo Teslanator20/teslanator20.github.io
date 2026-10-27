@@ -20,6 +20,12 @@ via GitHub Pages.
 - `record/` — Sequoia against the all-time season record ([Shy] ShadowFall, Season 1,
   20,270,919). No poller of its own: the page reads the root `snapshots.json` and draws the
   record as a fixed line, with pace and a projected break date.
+- `war/` — the Sequoia vs Avicia territory war (since 24.10. 21:00 CEST): territories, wars per
+  hour, snipes, HQ changes, wipes (< 3 territories) and per-player war counts. `war-poll.js`
+  diffs the territory list (owner + `acquired`) every 20 s for ~4 min per run and logs each
+  owner change touching either guild; `.github/workflows/war.yml` starts a run whenever the
+  race poll is requested. The series was seeded from `snapshots.json`; snipes before the
+  exact log started are estimated from the 5-min territory counts.
 
 Workflow: `.github/workflows/poll.yml` runs every 5 min on cron + workflow_dispatch.
 Reliable trigger via cron-job.org → `POST /actions/workflows/poll.yml/dispatches`.
