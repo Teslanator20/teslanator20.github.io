@@ -1,0 +1,46 @@
+name: War Tracker
+
+# Watches the territory map for the war/ page. Each run polls for ~4 min and is started
+# whenever the race poll is requested (cron-job.org dispatches that one reliably), with
+# GitHub's own cron as a fallback. Runs queue back to back, so the map is watched almost
+# continuously.
+on:
+  workflow_run:
+    workflows: ["Poll Race Snapshot"]
+    types: [requested]
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: war
+  cancel-in-progress: false
+
+jobs:
+  war:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node war-poll.js --duration 250 --interval 20
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add war/
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: append war state"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "Retry $i"
+              sleep 2
+            done
+          fi
