@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <title>SEQ vs AVO — War</title>
@@ -144,17 +144,17 @@
 <body>
 <div class="wrap">
   <div class="topbar">
-    <a class="pill" href="../">Race</a>
-    <button class="pill" id="theme-toggle" aria-label="Theme wechseln">Dark</button>
+    <a class="pill" id="race-link" href="../">Race</a>
+    <button class="pill" id="theme-toggle" aria-label="Toggle theme">Dark</button>
   </div>
 
   <div class="eyebrow">Wynncraft · Territory War</div>
   <h1><span class="l">Sequoia</span> <em>vs</em> <span class="r">Avicia</span></h1>
   <div class="meta">
-    <span>Krieg seit <strong id="m-start">—</strong></span>
-    <span>Dauer <strong id="m-dur">—</strong></span>
-    <span>Exakter Territory-Log seit <strong id="m-track">—</strong></span>
-    <span>Stand <strong id="m-upd">—</strong></span>
+    <span>War since <strong id="m-start">—</strong></span>
+    <span>Duration <strong id="m-dur">—</strong></span>
+    <span>Exact territory log since <strong id="m-track">—</strong></span>
+    <span>Updated <strong id="m-upd">—</strong></span>
   </div>
 
   <section class="score" id="score"></section>
@@ -162,46 +162,46 @@
   <div id="focus"></div>
 
   <h2>Territories</h2>
-  <p class="lede">Anzahl Territories pro Gilde. Die gestrichelte Linie ist die Wipe-Grenze: Wer darunter fällt, gilt als gewiped.</p>
+  <p class="lede">Territories held by each guild. The dashed line is the wipe threshold: dropping below it counts as a wipe.</p>
   <div class="card">
     <div class="legend" id="lg-terr"></div>
     <div class="chart"><canvas id="c-terr"></canvas></div>
   </div>
 
-  <h2>Wer performt wann stärker</h2>
-  <p class="lede">Wars pro Stunde aus dem War-Zähler der Gilde (jeder gewonnene War zählt, auch gegen andere Gilden). Links der Verlauf, rechts der Schnitt nach Uhrzeit (deutsche Zeit).</p>
+  <h2>Who performs better, and when</h2>
+  <p class="lede">Wars per hour from each guild's war counter (every war won counts, including against other guilds). Left: over time. Right: average by hour of day (CET).</p>
   <div class="grid2">
     <div class="card">
-      <p class="ctitle">Wars pro Stunde</p><p class="csub">Verlauf seit Kriegsbeginn</p>
+      <p class="ctitle">Wars per hour</p><p class="csub">Since the war started</p>
       <div class="legend" id="lg-wph"></div>
       <div class="chart sm"><canvas id="c-wph"></canvas></div>
     </div>
     <div class="card">
-      <p class="ctitle">Ø Wars nach Uhrzeit</p><p class="csub">Durchschnitt je Stunde des Tages</p>
+      <p class="ctitle">Avg wars by hour of day</p><p class="csub">Average per hour of the day (CET)</p>
       <div class="legend" id="lg-hod"></div>
       <div class="chart sm"><canvas id="c-hod"></canvas></div>
     </div>
   </div>
   <div class="card" style="margin-top:14px">
-    <p class="ctitle">Wer führt wann? Territory-Vorsprung nach Wochentag × Uhrzeit</p>
-    <p class="csub">Ø Differenz der Territories (SEQ − AVO). Grün = SEQ vorn, Blau = AVO vorn, Grau = ausgeglichen.</p>
+    <p class="ctitle">Who leads when? Territory lead by weekday × hour</p>
+    <p class="csub">Average territory difference (SEQ − AVO). Green = SEQ ahead, blue = AVO ahead, gray = even.</p>
     <div class="heat" id="heat"></div>
   </div>
 
-  <h2>Tagesbilanz</h2>
+  <h2>Daily breakdown</h2>
   <div class="card tablewrap"><table id="t-days"></table></div>
-  <p class="note">Tage nach deutscher Zeit. „Ø Terr.“ ist zeitgewichtet. Fett markiert den besseren Wert des Tages.</p>
+  <p class="note">Days in CET. “Avg terr.” is time-weighted. Bold marks the better value of the day.</p>
 
   <h2>Snipes</h2>
-  <p class="lede">Ein Snipe ist hier eine Territory-Übernahme direkt vom Gegner. Seit Beginn des exakten Logs wird jeder Besitzerwechsel mit Zeitstempel aus der API erfasst. Davor sind die Zahlen aus den 5-Minuten-Snapshots <em>geschätzt</em>: Verliert SEQ im selben Intervall Territories, die AVO gewinnt, zählt das als Snipe. Das zählt eher zu wenig.</p>
+  <p class="lede">A snipe here means taking a territory directly from the enemy. Since the exact log started, every ownership change is recorded with its timestamp from the API. Before that, numbers are <em>estimated</em> from the 5-minute snapshots: when SEQ loses territories in the same interval that AVO gains them, that counts as a snipe. This tends to undercount.</p>
   <div class="grid2">
     <div class="card">
-      <p class="ctitle">Snipes nach Uhrzeit</p><p class="csub">Wann wird am öftesten gesniped (deutsche Zeit)</p>
+      <p class="ctitle">Snipes by hour of day</p><p class="csub">When sniping happens most (CET)</p>
       <div class="legend" id="lg-snh"></div>
       <div class="chart sm"><canvas id="c-snh"></canvas></div>
     </div>
     <div class="card">
-      <p class="ctitle">Snipes pro Stunde</p><p class="csub">Verlauf seit Kriegsbeginn</p>
+      <p class="ctitle">Snipes per hour</p><p class="csub">Since the war started</p>
       <div class="legend" id="lg-snt"></div>
       <div class="chart sm"><canvas id="c-snt"></canvas></div>
     </div>
@@ -210,15 +210,15 @@
   <h2>HQs</h2>
   <div class="hqcards" id="hq"></div>
 
-  <h2>Besitzerwechsel-Log</h2>
-  <p class="lede">Alle exakt geloggten Wechsel, an denen SEQ oder AVO beteiligt ist. HQ-Wechsel sind rot hinterlegt. „Zurückerobert“ heißt: Das Territory wechselte zwischen zwei Polls weg und wieder zurück.</p>
+  <h2>Ownership change log</h2>
+  <p class="lede">Every exactly logged change involving SEQ or AVO. HQ changes are highlighted in red. “Retaken” means the territory was lost and won back between two polls.</p>
   <div class="card scroll"><table id="t-log"></table></div>
 
   <h2>Wipes</h2>
   <p class="lede" id="wipe-lede"></p>
   <div class="card tablewrap"><table id="t-wipes"></table></div>
 
-  <h2>Warcount pro Spieler</h2>
+  <h2>War count per player</h2>
   <p class="lede" id="mem-lede"></p>
   <div class="grid2">
     <div class="card scroll"><table id="t-mem-l"></table></div>
@@ -229,11 +229,11 @@
 
 <script>
 const TZ = "Europe/Berlin";
-const fmtDT = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-const fmtT = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, hour: "2-digit", minute: "2-digit" });
-const fmtD = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit" });
-const fmtAxis = new Intl.DateTimeFormat("de-DE", { timeZone: TZ, day: "2-digit", month: "2-digit", hour: "2-digit" });
-const nf = new Intl.NumberFormat("de-DE");
+const fmtDT = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+const fmtT = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit" });
+const fmtD = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, weekday: "short", day: "2-digit", month: "2-digit" });
+const fmtAxis = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, day: "2-digit", month: "2-digit", hour: "2-digit" });
+const nf = new Intl.NumberFormat("en-GB");
 const partsCache = new Map();
 function berlin(tSec) {
   // {key: YYYY-MM-DD, hour, dow 0=Mo}
@@ -249,7 +249,7 @@ function berlin(tSec) {
 const dt = t => fmtDT.format(new Date(t * 1000));
 function dur(s) {
   const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
-  return d ? `${d} T ${h} h` : h ? `${h} h ${m} min` : m ? `${m} min` : `${Math.max(0, Math.round(s))} s`;
+  return d ? `${d} d ${h} h` : h ? `${h} h ${m} min` : m ? `${m} min` : `${Math.max(0, Math.round(s))} s`;
 }
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function el(tag, attrs = {}, ...kids) {
@@ -395,7 +395,7 @@ function analyse(cfg, series, changes, members, state) {
   for (const [uuid, m] of Object.entries(members.members || {})) {
     if (m.g in mem) mem[m.g].push({ uuid, name: m.n, since: m.w - m.w0, total: m.w, left: !!m.left, h: m.h, t0: m.t0 });
   }
-  for (const k of [L, R]) mem[k].sort((a, b) => b.since - a.since || b.total - a.total);
+  for (const k of [L, R]) mem[k].sort((a, b) => b.since - a.since || a.name.localeCompare(b.name));
 
   // uptime of the focus territories (config.focus), owned by the left guild
   const focus = (cfg.focus || []).map(name => focusStats(name, changes, start, now, L));
@@ -506,30 +506,30 @@ function render(D) {
   const wl = A.wipes.filter(w => w.side === L).length, wr = A.wipes.filter(w => w.side === R).length;
   const pct = v => Math.round(100 * v / Math.max(1, A.span)) + " %";
   document.getElementById("score").replaceChildren(
-    tile("Territories jetzt", A.last[1], A.last[2], `Ø seit Kriegsbeginn: ${L} ${(A.terrSecs[L] / Math.max(1, A.span)).toFixed(1)} · ${R} ${(A.terrSecs[R] / Math.max(1, A.span)).toFixed(1)}`),
-    tile("Wars seit Kriegsbeginn", A.warsSince[L], A.warsSince[R], `Zeit in Führung (Territories): ${L} ${pct(A.leadSecs[L])} · ${R} ${pct(A.leadSecs[R])}`),
-    tile("Snipes vom Gegner", A.snipeTotal(L), A.snipeTotal(R), `davon exakt geloggt: ${L} ${A.snipeExact(L)} · ${R} ${A.snipeExact(R)}, der Rest geschätzt`),
-    tile(`Wipes (unter ${cfg.wipeBelow} Terr.)`, wl, wr, "Weniger ist besser", false),
+    tile("Territories now", A.last[1], A.last[2], `Avg since war start: ${L} ${(A.terrSecs[L] / Math.max(1, A.span)).toFixed(1)} · ${R} ${(A.terrSecs[R] / Math.max(1, A.span)).toFixed(1)}`),
+    tile("Wars since war start", A.warsSince[L], A.warsSince[R], `Time in the lead (territories): ${L} ${pct(A.leadSecs[L])} · ${R} ${pct(A.leadSecs[R])}`),
+    tile("Snipes on the enemy", A.snipeTotal(L), A.snipeTotal(R), `exactly logged: ${L} ${A.snipeExact(L)} · ${R} ${A.snipeExact(R)}, the rest estimated`),
+    tile(`Wipes (below ${cfg.wipeBelow} terr.)`, wl, wr, "Lower is better", false),
   );
 
   // focus territories: uptime, ownership strip, losses
   const ownerColor = g => g === L ? cl : g === R ? cr : css("--neutral");
   const focusNodes = A.focus.map(F => {
     const head = el("h2", {}, `${F.name} · Uptime`);
-    if (!F.known) return [head, el("div", { class: "card muted" }, "Wird ab dem nächsten Poll gemessen.")];
+    if (!F.known) return [head, el("div", { class: "card muted" }, "Measured from the next poll on.")];
     const ftile = (lbl, num, sub) => el("div", { class: "tile uptime" }, el("div", { class: "lbl" }, lbl), el("div", { class: "num" }, num), sub ? el("div", { class: "sub" }, sub) : null);
     const pctStr = (F.uptime * 100).toFixed(F.uptime > 0.999 || F.uptime < 0.001 ? 0 : 1) + " %";
     const holder = F.owner === L ? nameL : F.owner === R ? nameR : (F.owner ?? "?");
     const tiles = el("div", { class: "ftiles" },
-      ftile(`Uptime ${L}`, (F.approx ? "≥ " : "") + pctStr, `${dur(F.held)} von ${dur(F.total)} gehalten`),
-      ftile("Verloren", `${F.losses.length}×`, `davon an ${R}: ${F.losses.filter(l => l.by === R).length}×`),
-      ftile("Längster Ausfall", F.losses.length ? dur(F.longestOut) : "—", F.losses.length ? "" : "noch nie verloren"),
-      ftile("Aktuell", holder, `seit ${dt(F.since)} (${dur(F.end - F.since)})`));
-    const strip = el("div", { class: "strip", role: "img", "aria-label": `Besitzverlauf ${F.name}` });
+      ftile(`Uptime ${L}`, (F.approx ? "≥ " : "") + pctStr, `held ${dur(F.held)} of ${dur(F.total)}`),
+      ftile("Lost", `${F.losses.length}×`, `to ${R}: ${F.losses.filter(l => l.by === R).length}×`),
+      ftile("Longest outage", F.losses.length ? dur(F.longestOut) : "—", F.losses.length ? "" : "never lost"),
+      ftile("Current holder", holder, `since ${dt(F.since)} (${dur(F.end - F.since)})`));
+    const strip = el("div", { class: "strip", role: "img", "aria-label": `Ownership timeline of ${F.name}` });
     for (const sg of F.segs) {
       if (sg.to <= sg.from) continue;
       const seg = el("div", { class: "seg", tabindex: "0", style: `flex:${sg.to - sg.from} 0 0;background:${ownerColor(sg.g)}` });
-      const nodes = () => [el("div", { style: "font-weight:700" }, sg.g ?? "kurz verloren"),
+      const nodes = () => [el("div", { style: "font-weight:700" }, sg.g ?? "briefly lost"),
         el("div", { class: "muted" }, `${dt(sg.from)} – ${dt(sg.to)} · ${dur(sg.to - sg.from)}`)];
       seg.addEventListener("pointermove", e => showTip(e, nodes()));
       seg.addEventListener("focus", e => showTip(e, nodes()));
@@ -537,18 +537,18 @@ function render(D) {
       strip.append(seg);
     }
     const lossRows = F.losses.slice().reverse().map(l => el("tr", {},
-      el("td", {}, dt(l.t)), el("td", {}, l.by ? chip(l.by) : el("span", { class: "muted" }, "unbekannt")),
-      el("td", {}, l.end ? dt(l.end) : "noch nicht zurück"),
+      el("td", {}, dt(l.t)), el("td", {}, l.by ? chip(l.by) : el("span", { class: "muted" }, "unknown")),
+      el("td", {}, l.end ? dt(l.end) : "not back yet"),
       el("td", { class: "n" }, (l.approx ? "≤ " : "") + dur((l.end ?? F.end) - l.t))));
     return [head,
-      el("p", { class: "lede" }, `Wie lange ${nameL} ${F.name} gehalten hat, gemessen ab ${dt(F.w0)}. Davor gibt die API keinen Besitzverlauf her.`),
+      el("p", { class: "lede" }, `How long ${nameL} has held ${F.name}, measured from ${dt(F.w0)}. The API has no ownership history before that.`),
       tiles,
       el("div", { class: "card" },
-        el("div", { class: "legend" }, ...[[nameL, cl], [nameR, cr], ["Andere / kurz verloren", css("--neutral")]].map(([t, c]) => el("span", {}, el("i", { class: "box", style: `background:${c}` }), t))),
-        strip, el("div", { class: "strip-axis" }, el("span", {}, dt(F.w0)), el("span", {}, "jetzt")),
+        el("div", { class: "legend" }, ...[[nameL, cl], [nameR, cr], ["Other / briefly lost", css("--neutral")]].map(([t, c]) => el("span", {}, el("i", { class: "box", style: `background:${c}` }), t))),
+        strip, el("div", { class: "strip-axis" }, el("span", {}, dt(F.w0)), el("span", {}, "now")),
         el("div", { class: "tablewrap", style: "margin-top:14px" }, el("table", {},
-          el("thead", {}, el("tr", {}, th("Verloren um"), th("An"), th("Zurück um"), th("Ausfall", 1))),
-          el("tbody", {}, ...(lossRows.length ? lossRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, `${nameL} hält ${F.name} seit Messbeginn ununterbrochen.`))])))))];
+          el("thead", {}, el("tr", {}, th("Lost at"), th("To"), th("Back at"), th("Outage", 1))),
+          el("tbody", {}, ...(lossRows.length ? lossRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, `${nameL} has held ${F.name} without a break since measuring began.`))])))))];
   });
   document.getElementById("focus").replaceChildren(...focusNodes.flat());
 
@@ -561,7 +561,7 @@ function render(D) {
       datasets: [
         { label: nameL, data: xs.map(p => p[1]), borderColor: cl, backgroundColor: cl, borderWidth: 2, pointRadius: 0, stepped: true },
         { label: nameR, data: xs.map(p => p[2]), borderColor: cr, backgroundColor: cr, borderWidth: 2, pointRadius: 0, stepped: true },
-        { label: "Wipe-Grenze", data: xs.map(() => cfg.wipeBelow), borderColor: css("--down"), borderWidth: 1, borderDash: [4, 3], pointRadius: 0 },
+        { label: "Wipe threshold", data: xs.map(() => cfg.wipeBelow), borderColor: css("--down"), borderWidth: 1, borderDash: [4, 3], pointRadius: 0 },
       ],
     },
     options: chartBase({
@@ -570,7 +570,7 @@ function render(D) {
     }),
     plugins: [crosshair],
   });
-  legend("lg-terr", [[nameL, cl], [nameR, cr], [`Wipe-Grenze (${cfg.wipeBelow})`, null, "dash"]]);
+  legend("lg-terr", [[nameL, cl], [nameR, cr], [`Wipe threshold (${cfg.wipeBelow})`, null, "dash"]]);
 
   // wars per hour (absolute)
   const hrs = A.hours;
@@ -593,27 +593,27 @@ function render(D) {
     data: { labels: hodLabels, datasets: [
       bar(nameL, A.hod.map(x => x.n ? +(x[L] / x.n).toFixed(1) : 0), cl),
       bar(nameR, A.hod.map(x => x.n ? +(x[R] / x.n).toFixed(1) : 0), cr)] },
-    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 Uhr`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
+    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 CET`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
   });
   legend("lg-hod", [[nameL, cl, "box"], [nameR, cr, "box"]]);
 
   // snipes by hour of day + over time
   mk("c-snh", {
     type: "bar",
-    data: { labels: hodLabels, datasets: [bar(`${L} snipet ${R}`, A.hod.map(x => x.sL), cl), bar(`${R} snipet ${L}`, A.hod.map(x => x.sR), cr)] },
-    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 Uhr`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
+    data: { labels: hodLabels, datasets: [bar(`${L} sniped ${R}`, A.hod.map(x => x.sL), cl), bar(`${R} sniped ${L}`, A.hod.map(x => x.sR), cr)] },
+    options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 CET`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
   });
-  legend("lg-snh", [[`${L} snipet ${R}`, cl, "box"], [`${R} snipet ${L}`, cr, "box"]]);
+  legend("lg-snh", [[`${L} sniped ${R}`, cl, "box"], [`${R} sniped ${L}`, cr, "box"]]);
   mk("c-snt", {
     type: "bar",
-    data: { labels: hrs, datasets: [bar(`${L} snipet ${R}`, hrs.map(h => A.snph.get(h)?.[L] ?? 0), cl), bar(`${R} snipet ${L}`, hrs.map(h => A.snph.get(h)?.[R] ?? 0), cr)] },
+    data: { labels: hrs, datasets: [bar(`${L} sniped ${R}`, hrs.map(h => A.snph.get(h)?.[L] ?? 0), cl), bar(`${R} sniped ${L}`, hrs.map(h => A.snph.get(h)?.[R] ?? 0), cr)] },
     options: barOpts(it => `${dt(it[0].label)} – ${fmtT.format(new Date((+it[0].label + 3600) * 1000))}`, hourTick),
   });
-  legend("lg-snt", [[`${L} snipet ${R}`, cl, "box"], [`${R} snipet ${L}`, cr, "box"]]);
+  legend("lg-snt", [[`${L} sniped ${R}`, cl, "box"], [`${R} sniped ${L}`, cr, "box"]]);
 
   // weekday × hour heatmap of territory lead (diverging: green ↔ gray ↔ blue)
   const heat = document.getElementById("heat");
-  const dows = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+  const dows = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   let maxAbs = 1;
   for (const row of A.heat) for (const c of row) if (c.secs) maxAbs = Math.max(maxAbs, Math.abs(c.sum / c.secs));
   const mix = (a, b, f) => `color-mix(in oklab, ${b} ${Math.round(f * 100)}%, ${a})`;
@@ -626,8 +626,8 @@ function render(D) {
       const v = c.secs ? c.sum / c.secs : null;
       const bg = v == null ? "transparent" : v >= 0 ? mix(css("--neutral"), cl, Math.min(1, v / maxAbs) * .9 + .1 * (v > 0)) : mix(css("--neutral"), cr, Math.min(1, -v / maxAbs) * .9 + .1);
       const cell = el("div", { class: "c", tabindex: v == null ? "-1" : "0", style: `background:${bg};${v == null ? "border:1px dashed var(--rule)" : ""}` });
-      const tipNodes = () => [el("div", { style: "font-weight:700" }, v == null ? "keine Daten" : `${v > 0 ? "+" : ""}${v.toFixed(1)} Territories`),
-        el("div", { class: "muted" }, `${dows[d]} ${String(h).padStart(2, "0")}:00–${String((h + 1) % 24).padStart(2, "0")}:00 · ${v == null ? "" : v > 0.5 ? L + " vorn" : v < -0.5 ? R + " vorn" : "ausgeglichen"}`)];
+      const tipNodes = () => [el("div", { style: "font-weight:700" }, v == null ? "no data" : `${v > 0 ? "+" : ""}${v.toFixed(1)} Territories`),
+        el("div", { class: "muted" }, `${dows[d]} ${String(h).padStart(2, "0")}:00–${String((h + 1) % 24).padStart(2, "0")}:00 · ${v == null ? "" : v > 0.5 ? L + " ahead" : v < -0.5 ? R + " ahead" : "even"}`)];
       cell.addEventListener("pointermove", e => showTip(e, tipNodes()));
       cell.addEventListener("focus", e => showTip(e, tipNodes()));
       cell.addEventListener("pointerleave", hideTip); cell.addEventListener("blur", hideTip);
@@ -650,8 +650,8 @@ function render(D) {
       tdn(d.on[L]), tdn(d.on[R]));
   });
   document.getElementById("t-days").replaceChildren(
-    el("thead", {}, el("tr", {}, th("Tag"), th(`Wars ${L}`, 1), th(`Wars ${R}`, 1), th(`Snipes ${L}`, 1), th(`Snipes ${R}`, 1),
-      th(`Ø Terr. ${L}`, 1), th(`Ø Terr. ${R}`, 1), th(`Wipes ${L}`, 1), th(`Wipes ${R}`, 1), th(`Max online ${L}`, 1), th(`Max online ${R}`, 1))),
+    el("thead", {}, el("tr", {}, th("Day"), th(`Wars ${L}`, 1), th(`Wars ${R}`, 1), th(`Snipes ${L}`, 1), th(`Snipes ${R}`, 1),
+      th(`Avg terr. ${L}`, 1), th(`Avg terr. ${R}`, 1), th(`Wipes ${L}`, 1), th(`Wipes ${R}`, 1), th(`Max online ${L}`, 1), th(`Max online ${R}`, 1))),
     el("tbody", {}, ...dayRows.reverse()));
 
   // HQs
@@ -660,13 +660,13 @@ function render(D) {
     const lost = log.filter(c => c.from === h.g && c.to !== h.g).length;
     const lastC = log[log.length - 1];
     return el("div", { class: "card" },
-      el("div", { class: "eyebrow" }, `HQ von ${h.g === L ? nameL : nameR}`),
+      el("div", { class: "eyebrow" }, `HQ of ${h.g === L ? nameL : nameR}`),
       el("div", { class: "hqname" }, h.name),
-      el("div", { class: "hqline" }, `Im Besitz seit ${h.a ? dt(Math.floor(new Date(h.a).getTime() / 1000)) : "—"}`),
-      el("div", { class: "hqline" }, `${log.length} Wechsel geloggt${lost ? `, davon ${lost}× verloren` : ""}${lastC ? ` · zuletzt ${dt(lastC.t)} (${lastC.from ?? "?"} → ${lastC.to ?? "?"})` : ""}`));
+      el("div", { class: "hqline" }, `Held since ${h.a ? dt(Math.floor(new Date(h.a).getTime() / 1000)) : "—"}`),
+      el("div", { class: "hqline" }, `${log.length} changes logged${lost ? `, lost ${lost}×` : ""}${lastC ? ` · last ${dt(lastC.t)} (${lastC.from ?? "?"} → ${lastC.to ?? "?"})` : ""}`));
   };
   const hqList = [L, R].map(g => A.hqs.find(h => h.g === g)).filter(Boolean);
-  document.getElementById("hq").replaceChildren(...(hqList.length ? hqList.map(hqCard) : [el("div", { class: "card muted" }, "Noch keine Territory-Daten.")]));
+  document.getElementById("hq").replaceChildren(...(hqList.length ? hqList.map(hqCard) : [el("div", { class: "card muted" }, "No territory data yet.")]));
 
   // change log
   const logRows = D.changes.changes.filter(c => c.t >= A.start).slice().reverse().map(c =>
@@ -674,40 +674,45 @@ function render(D) {
       el("td", {}, dt(c.t)),
       el("td", {}, c.terr, c.hq ? el("span", { class: "chip hq", style: "margin-left:6px" }, "HQ") : null),
       el("td", {}, chip(c.from), " → ", chip(c.to)),
-      el("td", { class: "muted" }, c.retake ? "zurückerobert" : (c.from === L && c.to === R) || (c.from === R && c.to === L) ? "Snipe" : "Dritte Gilde")));
+      el("td", { class: "muted" }, c.retake ? "retaken" : (c.from === L && c.to === R) || (c.from === R && c.to === L) ? "Snipe" : "Third guild")));
   document.getElementById("t-log").replaceChildren(
-    el("thead", {}, el("tr", {}, th("Zeit"), th("Territory"), th("Wechsel"), th("Art"))),
-    el("tbody", {}, ...(logRows.length ? logRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, "Noch keine Wechsel geloggt."))])));
+    el("thead", {}, el("tr", {}, th("Time"), th("Territory"), th("Change"), th("Type"))),
+    el("tbody", {}, ...(logRows.length ? logRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, "No changes logged yet."))])));
 
   // wipes
   document.getElementById("wipe-lede").textContent =
-    `Ein Wipe zählt, sobald eine Gilde unter ${cfg.wipeBelow} Territories fällt. Er endet, wenn sie wieder ${cfg.wipeBelow} oder mehr hält.`;
+    `A wipe counts as soon as a guild drops below ${cfg.wipeBelow} territories. It ends once the guild holds ${cfg.wipeBelow} or more again.`;
   const wipeRows = A.wipes.slice().reverse().map(w => el("tr", {},
-    el("td", {}, chip(w.side)), el("td", {}, dt(w.t)), el("td", {}, w.end ? dt(w.end) : "läuft noch"),
+    el("td", {}, chip(w.side)), el("td", {}, dt(w.t)), el("td", {}, w.end ? dt(w.end) : "ongoing"),
     el("td", { class: "n" }, dur((w.end ?? A.now) - w.t)), el("td", { class: "n" }, w.min)));
   document.getElementById("t-wipes").replaceChildren(
-    el("thead", {}, el("tr", {}, th("Gilde"), th("Gewiped um"), th("Wieder ≥ " + cfg.wipeBelow), th("Dauer", 1), th("Tiefstand", 1))),
-    el("tbody", {}, ...(wipeRows.length ? wipeRows : [el("tr", {}, el("td", { colspan: "5", class: "muted" }, "Noch kein Wipe."))])));
+    el("thead", {}, el("tr", {}, th("Guild"), th("Wiped at"), th("Back to ≥ " + cfg.wipeBelow), th("Duration", 1), th("Low", 1))),
+    el("tbody", {}, ...(wipeRows.length ? wipeRows : [el("tr", {}, el("td", { colspan: "5", class: "muted" }, "No wipes yet."))])));
 
   // members
   document.getElementById("mem-lede").textContent =
-    `„Seit Tracking“ zählt die Wars jedes Spielers ab ${A.membersSince ? dt(A.membersSince) : "—"}. Ältere Werte pro Spieler gibt die API nicht her. „Gesamt“ ist der War-Zähler über die ganze Spielzeit.`;
+    `Wars per player, counted from 0 at ${A.membersSince ? dt(A.membersSince) : "—"}. The API has no earlier per-player values.`;
   for (const [id, g, name] of [["t-mem-l", L, nameL], ["t-mem-r", R, nameR]]) {
     const rows = A.mem[g].map((m, i) => el("tr", {},
       el("td", { class: "n muted" }, i + 1),
-      el("td", {}, m.name, m.left ? el("span", { class: "muted" }, " (raus)") : null),
-      el("td", { class: "n" + (i < 3 && m.since > 0 ? " win" : "") }, nf.format(m.since)),
-      el("td", { class: "n muted" }, nf.format(m.total))));
+      el("td", {}, m.name, m.left ? el("span", { class: "muted" }, " (left)") : null),
+      el("td", { class: "n" + (i < 3 && m.since > 0 ? " win" : "") }, nf.format(m.since))));
     document.getElementById(id).replaceChildren(
-      el("thead", {}, el("tr", {}, th("#", 1), th(name), th("Seit Tracking", 1), th("Gesamt", 1))),
+      el("thead", {}, el("tr", {}, th("#", 1), th(name), th("Wars", 1))),
       el("tbody", {}, ...rows));
   }
 }
 
+// On GitHub Pages the data sits next to the page. Anywhere else (e.g. Vercel) it is read
+// from Pages, where the poller commits it, so that host never needs a redeploy for new data.
+const PAGES = "https://teslanator20.github.io/war/";
+const ON_PAGES = /(^|\.)github\.io$/.test(location.hostname) || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const DATA_BASE = ON_PAGES ? "" : PAGES;
+if (!ON_PAGES) document.getElementById("race-link").href = "https://teslanator20.github.io/";
 async function load() {
-  const get = p => fetch(p + "?t=" + Date.now()).then(r => r.ok ? r.json() : null);
+  const get = p => fetch(DATA_BASE + p + "?t=" + Date.now()).then(r => r.ok ? r.json() : null);
   const [cfg, series, changes, members, state] = await Promise.all(["config.json", "series.json", "changes.json", "members.json", "state.json"].map(get));
-  if (!cfg || !series?.points?.length) { document.getElementById("score").textContent = "Noch keine Daten."; return; }
+  if (!cfg || !series?.points?.length) { document.getElementById("score").textContent = "No data yet."; return; }
   const ch = changes || { since: null, changes: [] };
   DATA = { cfg, changes: ch, a: analyse(cfg, series, ch, members || { members: {} }, state || { terr: {} }) };
   render(DATA);

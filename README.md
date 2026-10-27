@@ -25,7 +25,9 @@ via GitHub Pages.
   diffs the territory list (owner + `acquired`) every 20 s for ~4 min per run and logs each
   owner change touching either guild; `.github/workflows/war.yml` starts a run whenever the
   race poll is requested. Territories listed in `war/config.json` → `focus` (Bloody Trail,
-  SEQ's HQ) also get an uptime timeline, measured from the owner at first sight. The series was seeded from `snapshots.json`; snipes before the
+  SEQ's HQ) also get an uptime timeline, measured from the owner at first sight. The page also
+  runs off Pages (e.g. on Vercel with Root Directory `war`): it then reads its data from
+  `teslanator20.github.io/war/`, and `war/vercel.json` skips builds for data-only commits. The series was seeded from `snapshots.json`; snipes before the
   exact log started are estimated from the 5-min territory counts.
 
 Workflow: `.github/workflows/poll.yml` runs every 5 min on cron + workflow_dispatch.
