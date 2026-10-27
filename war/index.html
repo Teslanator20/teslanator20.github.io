@@ -190,18 +190,18 @@
 
   <h2>Daily breakdown</h2>
   <div class="card tablewrap"><table id="t-days"></table></div>
-  <p class="note">Days in CET. “Avg terr.” is time-weighted. Bold marks the better value of the day.</p>
+  <p class="note">Days in CET. “Snipes” are Bloody Trail captures (“—” = before counting started). “Avg terr.” is time-weighted. Bold marks the better value of the day.</p>
 
-  <h2>Snipes</h2>
-  <p class="lede">A snipe here means taking a territory directly from the enemy. Since the exact log started, every ownership change is recorded with its timestamp from the API. Before that, numbers are <em>estimated</em> from the 5-minute snapshots: when SEQ loses territories in the same interval that AVO gains them, that counts as a snipe. This tends to undercount.</p>
+  <h2>Snipes · <span id="snipe-target">Bloody Trail</span></h2>
+  <p class="lede" id="snipe-lede">A snipe is an ownership change of Bloody Trail, the territory both guilds fight hardest to hold. Each one is credited to the guild that took it. If Bloody Trail was lost and won back between two polls, the loss counts for “other / unknown” and the retake for the holder. Counting starts with the exact territory log: the API has no ownership history before that.</p>
   <div class="grid2">
     <div class="card">
-      <p class="ctitle">Snipes by hour of day</p><p class="csub">When sniping happens most (CET)</p>
+      <p class="ctitle">Snipes by hour of day</p><p class="csub">When Bloody Trail changes hands most (CET)</p>
       <div class="legend" id="lg-snh"></div>
       <div class="chart sm"><canvas id="c-snh"></canvas></div>
     </div>
     <div class="card">
-      <p class="ctitle">Snipes per hour</p><p class="csub">Since the war started</p>
+      <p class="ctitle">Snipes per hour</p><p class="csub">Since counting started</p>
       <div class="legend" id="lg-snt"></div>
       <div class="chart sm"><canvas id="c-snt"></canvas></div>
     </div>
@@ -296,23 +296,22 @@ function analyse(cfg, series, changes, members, state) {
   const track = changes.since ?? Infinity;
   const now = pts[pts.length - 1][0];
 
-  // snipes: estimated before the exact log, exact afterwards
-  const snipes = []; // {t, by: L|R, n, exact, hq, terr}
-  for (let i = 1; i < pts.length; i++) {
-    const [t, l, r] = pts[i], [, pl, pr] = pts[i - 1];
-    if (t > track || t <= start) continue;
-    const dl = l - pl, dr = r - pr;
-    const lTook = Math.min(Math.max(dl, 0), Math.max(-dr, 0));
-    const rTook = Math.min(Math.max(dr, 0), Math.max(-dl, 0));
-    if (lTook) snipes.push({ t, by: L, n: lTook, exact: false });
-    if (rTook) snipes.push({ t, by: R, n: rTook, exact: false });
-  }
+  // snipes: every ownership change of the target territory (config.target, Bloody Trail),
+  // credited to the guild that took it. A "retake" (lost and won back between two polls)
+  // is two changes: a capture by an unknown guild, then the holder taking it back.
+  const target = cfg.target || (cfg.focus || [])[0];
+  const O = "other";
+  const snipes = []; // {t, by: L|R|O, from}
   for (const c of changes.changes) {
-    if (c.t < start) continue;
-    if ((c.from === L && c.to === R) || (c.from === R && c.to === L)) snipes.push({ t: c.t, by: c.to, n: 1, exact: true, hq: c.hq, terr: c.terr });
+    if (c.terr !== target || c.t < start) continue;
+    if (c.retake) {
+      snipes.push({ t: c.pp ?? c.t, by: O, from: c.from });
+      snipes.push({ t: c.t, by: c.to === L || c.to === R ? c.to : O, from: null });
+    } else {
+      snipes.push({ t: c.t, by: c.to === L || c.to === R ? c.to : O, from: c.from });
+    }
   }
-  const snipeTotal = side => snipes.filter(s => s.by === side).reduce((a, s) => a + s.n, 0);
-  const snipeExact = side => snipes.filter(s => s.by === side && s.exact).length;
+  const snipeTotal = side => snipes.filter(s => s.by === side).length;
 
   // wipes (falling below the threshold) and time-weighted territory stats
   const wipes = [];
@@ -350,15 +349,15 @@ function analyse(cfg, series, changes, members, state) {
   const hours = [];
   for (let h = hour(start); h <= hour(now); h += 3600) hours.push(h);
   const snph = new Map();
-  for (const s of snipes) { const h = hour(s.t); const b = snph.get(h) || { [L]: 0, [R]: 0 }; b[s.by] += s.n; snph.set(h, b); }
+  for (const s of snipes) { const h = hour(s.t); const b = snph.get(h) || { [L]: 0, [R]: 0, [O]: 0 }; b[s.by]++; snph.set(h, b); }
 
   // hour-of-day profiles (Berlin)
-  const hod = Array.from({ length: 24 }, () => ({ [L]: 0, [R]: 0, n: 0, sL: 0, sR: 0 }));
+  const hod = Array.from({ length: 24 }, () => ({ [L]: 0, [R]: 0, n: 0, sL: 0, sR: 0, sO: 0 }));
   for (const h of hours) {
     const b = wph.get(h); if (!b) continue;
     const x = hod[berlin(h).hour]; x[L] += b[L]; x[R] += b[R]; x.n++;
   }
-  for (const s of snipes) { const x = hod[berlin(s.t).hour]; if (s.by === L) x.sL += s.n; else x.sR += s.n; }
+  for (const s of snipes) { const x = hod[berlin(s.t).hour]; if (s.by === L) x.sL++; else if (s.by === R) x.sR++; else x.sO++; }
 
   // weekday × hour territory lead
   const heat = Array.from({ length: 7 }, () => Array.from({ length: 24 }, () => ({ sum: 0, secs: 0 })));
@@ -380,7 +379,7 @@ function analyse(cfg, series, changes, members, state) {
     d.ts[L] += pl * (t - pt); d.ts[R] += pr * (t - pt); d.secs += t - pt;
     d.on[L] = Math.max(d.on[L], lo ?? 0); d.on[R] = Math.max(d.on[R], ro ?? 0);
   }
-  for (const s of snipes) day(berlin(s.t).key).s[s.by] += s.n;
+  for (const s of snipes) if (s.by !== O) day(berlin(s.t).key).s[s.by]++;
   for (const w of wipes) day(berlin(w.t).key).wipes[w.side]++;
 
   const first = pts.find(p => p[0] >= start) || pts[0], last = pts[pts.length - 1];
@@ -400,7 +399,7 @@ function analyse(cfg, series, changes, members, state) {
   // uptime of the focus territories (config.focus), owned by the left guild
   const focus = (cfg.focus || []).map(name => focusStats(name, changes, start, now, L));
 
-  return { focus, L, R, start, track, now, pts, first, last, snipes, snipeTotal, snipeExact, wipes, hours, wph, snph, hod, heat,
+  return { focus, target, O, L, R, start, track, now, pts, first, last, snipes, snipeTotal, wipes, hours, wph, snph, hod, heat,
            days: [...days.values()], warsSince, leadSecs, terrSecs, span, hqs, hqLog, mem, membersSince: members.since };
 }
 
@@ -457,7 +456,7 @@ function chartBase(extra = {}) {
     },
     scales: {
       x: { grid: { color: grid, drawTicks: false }, ticks: { color: muted, font: { size: 10.5 }, maxRotation: 0, autoSkipPadding: 18 }, border: { display: false } },
-      y: { grid: { color: grid, drawTicks: false }, ticks: { color: muted, font: { size: 10.5 }, padding: 6 }, border: { display: false }, beginAtZero: true },
+      y: { grid: { color: grid, drawTicks: false }, ticks: { color: muted, font: { size: 10.5 }, padding: 6, precision: 0 }, border: { display: false }, beginAtZero: true },
     },
     ...extra,
   };
@@ -508,7 +507,7 @@ function render(D) {
   document.getElementById("score").replaceChildren(
     tile("Territories now", A.last[1], A.last[2], `Avg since war start: ${L} ${(A.terrSecs[L] / Math.max(1, A.span)).toFixed(1)} · ${R} ${(A.terrSecs[R] / Math.max(1, A.span)).toFixed(1)}`),
     tile("Wars since war start", A.warsSince[L], A.warsSince[R], `Time in the lead (territories): ${L} ${pct(A.leadSecs[L])} · ${R} ${pct(A.leadSecs[R])}`),
-    tile("Snipes on the enemy", A.snipeTotal(L), A.snipeTotal(R), `exactly logged: ${L} ${A.snipeExact(L)} · ${R} ${A.snipeExact(R)}, the rest estimated`),
+    tile(`${A.target} snipes`, A.snipeTotal(L), A.snipeTotal(R), `Times each guild took ${A.target}${A.snipeTotal(A.O) ? ` · other/unknown: ${A.snipeTotal(A.O)}` : ""}. Counted since ${Number.isFinite(A.track) ? dt(A.track) : "—"}.`),
     tile(`Wipes (below ${cfg.wipeBelow} terr.)`, wl, wr, "Lower is better", false),
   );
 
@@ -579,7 +578,7 @@ function render(D) {
     scales: { ...chartBase().scales, x: { ...chartBase().scales.x, grid: { display: false }, ticks: { ...chartBase().scales.x.ticks, callback: tickFn } } },
     plugins: { ...chartBase().plugins, tooltip: { ...chartBase().plugins.tooltip, callbacks: { title: titleFn } } },
   });
-  const bar = (label, data, color) => ({ label, data, backgroundColor: color, borderRadius: { topLeft: 3, topRight: 3 }, borderSkipped: "bottom", barPercentage: .9, categoryPercentage: .8 });
+  const bar = (label, data, color) => ({ label, data, backgroundColor: color, borderRadius: { topLeft: 3, topRight: 3 }, borderSkipped: "bottom", barPercentage: .9, categoryPercentage: .8, maxBarThickness: 28 });
   mk("c-wph", {
     type: "bar",
     data: { labels: hrs, datasets: [bar(nameL, hrs.map(h => A.wph.get(h)?.[L] ?? 0), cl), bar(nameR, hrs.map(h => A.wph.get(h)?.[R] ?? 0), cr)] },
@@ -598,18 +597,23 @@ function render(D) {
   legend("lg-hod", [[nameL, cl, "box"], [nameR, cr, "box"]]);
 
   // snipes by hour of day + over time
+  const snHrs = hrs.filter(h => !Number.isFinite(A.track) || h >= Math.floor(A.track / 3600) * 3600);
+  document.getElementById("snipe-target").textContent = A.target;
   mk("c-snh", {
     type: "bar",
-    data: { labels: hodLabels, datasets: [bar(`${L} sniped ${R}`, A.hod.map(x => x.sL), cl), bar(`${R} sniped ${L}`, A.hod.map(x => x.sR), cr)] },
+    data: { labels: hodLabels, datasets: [bar(`${L} took it`, A.hod.map(x => x.sL), cl), bar(`${R} took it`, A.hod.map(x => x.sR), cr),
+      ...(A.snipeTotal(A.O) ? [bar("Other / unknown", A.hod.map(x => x.sO), css("--neutral"))] : [])] },
     options: barOpts(it => `${String(it[0].label).padStart(2, "0")}:00–${String((+it[0].label + 1) % 24).padStart(2, "0")}:00 CET`, function (v) { return String(this.getLabelForValue(v)).padStart(2, "0"); }),
   });
-  legend("lg-snh", [[`${L} sniped ${R}`, cl, "box"], [`${R} sniped ${L}`, cr, "box"]]);
+  const snLegend = [[`${L} took it`, cl, "box"], [`${R} took it`, cr, "box"], ...(A.snipeTotal(A.O) ? [["Other / unknown", css("--neutral"), "box"]] : [])];
+  legend("lg-snh", snLegend);
   mk("c-snt", {
     type: "bar",
-    data: { labels: hrs, datasets: [bar(`${L} sniped ${R}`, hrs.map(h => A.snph.get(h)?.[L] ?? 0), cl), bar(`${R} sniped ${L}`, hrs.map(h => A.snph.get(h)?.[R] ?? 0), cr)] },
+    data: { labels: snHrs, datasets: [bar(`${L} took it`, snHrs.map(h => A.snph.get(h)?.[L] ?? 0), cl), bar(`${R} took it`, snHrs.map(h => A.snph.get(h)?.[R] ?? 0), cr),
+      ...(A.snipeTotal(A.O) ? [bar("Other / unknown", snHrs.map(h => A.snph.get(h)?.[A.O] ?? 0), css("--neutral"))] : [])] },
     options: barOpts(it => `${dt(it[0].label)} – ${fmtT.format(new Date((+it[0].label + 3600) * 1000))}`, hourTick),
   });
-  legend("lg-snt", [[`${L} sniped ${R}`, cl, "box"], [`${R} sniped ${L}`, cr, "box"]]);
+  legend("lg-snt", snLegend);
 
   // weekday × hour heatmap of territory lead (diverging: green ↔ gray ↔ blue)
   const heat = document.getElementById("heat");
@@ -638,13 +642,15 @@ function render(D) {
 
   // daily table
   const tdn = (v, win) => el("td", { class: "n" + (win ? " win" : "") }, v);
+  // a Berlin day ends at most 26 h after its UTC midnight; "—" for days fully before counting
+  const dayEnd = key => { const [y, m, dd] = key.split("-").map(Number); return Date.UTC(y, m - 1, dd) / 1000 + 86400 - 3600; };
   const dayRows = A.days.map(d => {
     const [y, m, dd] = d.key.split("-");
     const tl = d.secs ? d.ts[L] / d.secs : 0, tr = d.secs ? d.ts[R] / d.secs : 0;
     return el("tr", {},
       el("td", {}, fmtD.format(new Date(Date.UTC(+y, +m - 1, +dd, 12)))),
       tdn(nf.format(d.w[L]), d.w[L] > d.w[R]), tdn(nf.format(d.w[R]), d.w[R] > d.w[L]),
-      tdn(d.s[L], d.s[L] > d.s[R]), tdn(d.s[R], d.s[R] > d.s[L]),
+      ...(dayEnd(d.key) <= A.track ? [tdn("—"), tdn("—")] : [tdn(d.s[L], d.s[L] > d.s[R]), tdn(d.s[R], d.s[R] > d.s[L])]),
       tdn(tl.toFixed(1), tl > tr), tdn(tr.toFixed(1), tr > tl),
       tdn(d.wipes[L], d.wipes[L] < d.wipes[R]), tdn(d.wipes[R], d.wipes[R] < d.wipes[L]),
       tdn(d.on[L]), tdn(d.on[R]));
@@ -674,7 +680,8 @@ function render(D) {
       el("td", {}, dt(c.t)),
       el("td", {}, c.terr, c.hq ? el("span", { class: "chip hq", style: "margin-left:6px" }, "HQ") : null),
       el("td", {}, chip(c.from), " → ", chip(c.to)),
-      el("td", { class: "muted" }, c.retake ? "retaken" : (c.from === L && c.to === R) || (c.from === R && c.to === L) ? "Snipe" : "Third guild")));
+      el("td", { class: c.terr === A.target ? "" : "muted", style: c.terr === A.target ? "font-weight:700" : "" },
+        c.terr === A.target ? (c.retake ? "Snipe + retake" : "Snipe") : c.retake ? "retaken" : (c.from === L || c.from === R) && (c.to === L || c.to === R) ? "Capture" : "Third guild")));
   document.getElementById("t-log").replaceChildren(
     el("thead", {}, el("tr", {}, th("Time"), th("Territory"), th("Change"), th("Type"))),
     el("tbody", {}, ...(logRows.length ? logRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, "No changes logged yet."))])));
