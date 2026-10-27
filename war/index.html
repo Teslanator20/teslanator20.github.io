@@ -392,7 +392,8 @@ function analyse(cfg, series, changes, members, state) {
   // members
   const mem = { [L]: [], [R]: [] };
   for (const [uuid, m] of Object.entries(members.members || {})) {
-    if (m.g in mem) mem[m.g].push({ uuid, name: m.n, since: m.w - m.w0, total: m.w, left: !!m.left, h: m.h, t0: m.t0 });
+    const hidden = m.w == null || m.w0 == null;
+    if (m.g in mem) mem[m.g].push({ uuid, name: m.n, since: hidden ? -1 : m.w - m.w0, hidden: !!m.hidden || hidden, left: !!m.left });
   }
   for (const k of [L, R]) mem[k].sort((a, b) => b.since - a.since || a.name.localeCompare(b.name));
 
@@ -698,12 +699,14 @@ function render(D) {
 
   // members
   document.getElementById("mem-lede").textContent =
-    `Wars per player, counted from 0 at ${A.membersSince ? dt(A.membersSince) : "—"}. The API has no earlier per-player values.`;
+    `Wars per player, counted from 0 at ${A.membersSince ? dt(A.membersSince) : "—"}. The API has no earlier per-player values. Players with API privacy on show as “hidden”; when they switch it off, counting starts from that moment, so wars fought while hidden are not included.`;
   for (const [id, g, name] of [["t-mem-l", L, nameL], ["t-mem-r", R, nameR]]) {
     const rows = A.mem[g].map((m, i) => el("tr", {},
       el("td", { class: "n muted" }, i + 1),
       el("td", {}, m.name, m.left ? el("span", { class: "muted" }, " (left)") : null),
-      el("td", { class: "n" + (i < 3 && m.since > 0 ? " win" : "") }, nf.format(m.since))));
+      el("td", { class: "n" + (i < 3 && m.since > 0 ? " win" : "") },
+        m.since < 0 ? el("span", { class: "muted", title: "API privacy on: wars can't be read" }, "hidden")
+          : [nf.format(m.since), m.hidden ? el("span", { class: "muted", title: "API privacy on right now: count is frozen" }, " (hidden)") : null].filter(Boolean).reduce((f, x) => (f.append(x), f), document.createDocumentFragment()))));
     document.getElementById(id).replaceChildren(
       el("thead", {}, el("tr", {}, th("#", 1), th(name), th("Wars", 1))),
       el("tbody", {}, ...rows));
@@ -718,7 +721,7 @@ const DATA_BASE = ON_PAGES ? "" : PAGES;
 if (!ON_PAGES) document.getElementById("race-link").href = "https://teslanator20.github.io/";
 // Bumped together with config.json → pageVersion whenever the page changes. An open or
 // browser-cached copy that sees a newer version reloads itself (at most every 10 min).
-const PAGE_VERSION = 3;
+const PAGE_VERSION = 4;
 function reloadIfOutdated(cfg) {
   if (!cfg?.pageVersion || cfg.pageVersion <= PAGE_VERSION) return false;
   let last = 0;
