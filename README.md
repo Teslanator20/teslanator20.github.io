@@ -27,7 +27,9 @@ via GitHub Pages.
   race poll is requested. Territories listed in `war/config.json` → `focus` (Bloody Trail,
   SEQ's HQ) also get an uptime timeline, measured from the owner at first sight. The page also
   runs off Pages (e.g. on Vercel with Root Directory `war`): it then reads its data from
-  `teslanator20.github.io/war/`, and `war/vercel.json` skips builds for data-only commits. The series was seeded from `snapshots.json`; snipes before the
+  `teslanator20.github.io/war/`, and `war/vercel.json` skips builds for data-only commits.
+  When the page changes, bump `PAGE_VERSION` in `war/index.html` and `pageVersion` in
+  `war/config.json` together: open or cached copies then reload themselves. The series was seeded from `snapshots.json`; snipes before the
   exact log started are estimated from the 5-min territory counts.
 
 Workflow: `.github/workflows/poll.yml` runs every 5 min on cron + workflow_dispatch.

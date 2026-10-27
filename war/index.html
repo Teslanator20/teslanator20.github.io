@@ -716,9 +716,23 @@ const PAGES = "https://teslanator20.github.io/war/";
 const ON_PAGES = /(^|\.)github\.io$/.test(location.hostname) || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 const DATA_BASE = ON_PAGES ? "" : PAGES;
 if (!ON_PAGES) document.getElementById("race-link").href = "https://teslanator20.github.io/";
+// Bumped together with config.json → pageVersion whenever the page changes. An open or
+// browser-cached copy that sees a newer version reloads itself (at most every 10 min).
+const PAGE_VERSION = 3;
+function reloadIfOutdated(cfg) {
+  if (!cfg?.pageVersion || cfg.pageVersion <= PAGE_VERSION) return false;
+  let last = 0;
+  try { last = Number(sessionStorage.getItem("war-reload") || 0); } catch {}
+  if (Date.now() - last < 10 * 60_000) return false;
+  try { sessionStorage.setItem("war-reload", String(Date.now())); } catch {}
+  const u = new URL(location.href); u.searchParams.set("v", cfg.pageVersion);
+  location.replace(u.toString());
+  return true;
+}
 async function load() {
-  const get = p => fetch(DATA_BASE + p + "?t=" + Date.now()).then(r => r.ok ? r.json() : null);
+  const get = p => fetch(DATA_BASE + p + "?t=" + Date.now(), { cache: "no-store" }).then(r => r.ok ? r.json() : null);
   const [cfg, series, changes, members, state] = await Promise.all(["config.json", "series.json", "changes.json", "members.json", "state.json"].map(get));
+  if (reloadIfOutdated(cfg)) return;
   if (!cfg || !series?.points?.length) { document.getElementById("score").textContent = "No data yet."; return; }
   const ch = changes || { since: null, changes: [] };
   DATA = { cfg, changes: ch, a: analyse(cfg, series, ch, members || { members: {} }, state || { terr: {} }) };
