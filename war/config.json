@@ -1,6 +1,19 @@
 {
   "start": "2026-10-24T19:00:00Z",
-  "left":  { "name": "Sequoia", "prefix": "SEQ", "color": "#3a8b3a", "colorDark": "#4caa4c" },
-  "right": { "name": "Avicia",  "prefix": "AVO", "color": "#2f6fb8", "colorDark": "#5591d4" },
-  "wipeBelow": 3
+  "left": {
+    "name": "Sequoia",
+    "prefix": "SEQ",
+    "color": "#3a8b3a",
+    "colorDark": "#4caa4c"
+  },
+  "right": {
+    "name": "Avicia",
+    "prefix": "AVO",
+    "color": "#2f6fb8",
+    "colorDark": "#5591d4"
+  },
+  "wipeBelow": 3,
+  "focus": [
+    "Bloody Trail"
+  ]
 }

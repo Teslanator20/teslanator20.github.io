@@ -108,6 +108,13 @@
   .muted { color: var(--muted); }
   .win { font-weight: 700; }
   .note { font-size: 11.5px; color: var(--muted); margin-top: 10px; line-height: 1.45; }
+  .strip { display: flex; height: 26px; border-radius: 4px; overflow: hidden; gap: 1px; background: var(--card); }
+  .strip .seg { min-width: 2px; outline: none; }
+  .strip .seg:hover, .strip .seg:focus { filter: brightness(1.15); box-shadow: inset 0 0 0 2px var(--ink); }
+  .strip-axis { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); margin-top: 6px; }
+  .uptime .num { font-family: 'Fraunces', Georgia, serif; font-size: 34px; line-height: 1; font-variation-settings: 'opsz' 96, 'wght' 500; font-variant-numeric: tabular-nums lining-nums; }
+  .ftiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 860px) { .ftiles { grid-template-columns: 1fr 1fr; } }
   .hqcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .hqname { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-variation-settings: 'opsz' 24, 'wght' 540; }
   .hqline { margin-top: 8px; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
@@ -151,6 +158,8 @@
   </div>
 
   <section class="score" id="score"></section>
+
+  <div id="focus"></div>
 
   <h2>Territories</h2>
   <p class="lede">Anzahl Territories pro Gilde. Die gestrichelte Linie ist die Wipe-Grenze: Wer darunter fällt, gilt als gewiped.</p>
@@ -240,7 +249,7 @@ function berlin(tSec) {
 const dt = t => fmtDT.format(new Date(t * 1000));
 function dur(s) {
   const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
-  return d ? `${d} T ${h} h` : h ? `${h} h ${m} min` : `${m} min`;
+  return d ? `${d} T ${h} h` : h ? `${h} h ${m} min` : m ? `${m} min` : `${Math.max(0, Math.round(s))} s`;
 }
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function el(tag, attrs = {}, ...kids) {
@@ -388,8 +397,47 @@ function analyse(cfg, series, changes, members, state) {
   }
   for (const k of [L, R]) mem[k].sort((a, b) => b.since - a.since || b.total - a.total);
 
-  return { L, R, start, track, now, pts, first, last, snipes, snipeTotal, snipeExact, wipes, hours, wph, snph, hod, heat,
+  // uptime of the focus territories (config.focus), owned by the left guild
+  const focus = (cfg.focus || []).map(name => focusStats(name, changes, start, now, L));
+
+  return { focus, L, R, start, track, now, pts, first, last, snipes, snipeTotal, snipeExact, wipes, hours, wph, snph, hod, heat,
            days: [...days.values()], warsSince, leadSecs, terrSecs, span, hqs, hqLog, mem, membersSince: members.since };
+}
+
+// Ownership timeline of one territory from the moment its owner was first known. A
+// "retake" (lost and retaken between two polls) becomes a short gap of unknown owner whose
+// length is bounded by the previous poll, so the uptime shown is a lower bound.
+function focusStats(name, changes, start, now, own) {
+  const fs = changes.firstSeen?.[name];
+  if (!fs) return { name, known: false };
+  const acq = fs.a ? Math.floor(new Date(fs.a).getTime() / 1000) : fs.t;
+  const w0 = Math.max(start, acq);
+  const list = changes.changes.filter(c => c.terr === name && c.t >= w0).sort((a, b) => a.t - b.t);
+  const end = Math.max(now, list.length ? list[list.length - 1].t : 0);
+  const segs = [], losses = [];
+  let owner = fs.g, t = w0, open = null;
+  for (const c of list) {
+    if (c.retake) {
+      const lo = Math.max(t, c.pp ?? c.t);
+      if (lo > t) segs.push({ from: t, to: lo, g: owner });
+      segs.push({ from: lo, to: c.t, g: null, approx: true });
+      if (owner === own) losses.push({ t: lo, end: c.t, by: null, approx: true });
+      t = c.t;
+      continue;
+    }
+    segs.push({ from: t, to: c.t, g: owner });
+    if (owner === own && c.to !== own) open = { t: c.t, by: c.to };
+    else if (c.to === own && open) { losses.push({ ...open, end: c.t }); open = null; }
+    else if (open && c.to !== own) open.by = c.to;
+    owner = c.to; t = c.t;
+  }
+  segs.push({ from: t, to: end, g: owner });
+  if (open) losses.push({ ...open, end: null });
+  const total = Math.max(1, end - w0);
+  const held = segs.filter(s => s.g === own).reduce((a, s) => a + s.to - s.from, 0);
+  const longestOut = losses.reduce((m, l) => Math.max(m, (l.end ?? end) - l.t), 0);
+  return { name, known: true, w0, end, segs, losses, uptime: held / total, held, total, owner, since: t, longestOut,
+           approx: losses.some(l => l.approx) };
 }
 
 // ── rendering ─────────────────────────────────
@@ -437,6 +485,8 @@ function render(D) {
   const { cfg } = D, A = D.a, L = A.L, R = A.R;
   const cl = css("--left"), cr = css("--right");
   const nameL = cfg.left.name, nameR = cfg.right.name;
+  const th = (t, n) => el("th", { class: n ? "n" : "" }, t);
+  const chip = g => el("span", { class: "chip" + (g === L ? " l" : g === R ? " r" : "") }, g ?? "—");
 
   document.getElementById("m-start").textContent = dt(A.start);
   document.getElementById("m-dur").textContent = dur(A.now - A.start);
@@ -461,6 +511,46 @@ function render(D) {
     tile("Snipes vom Gegner", A.snipeTotal(L), A.snipeTotal(R), `davon exakt geloggt: ${L} ${A.snipeExact(L)} · ${R} ${A.snipeExact(R)}, der Rest geschätzt`),
     tile(`Wipes (unter ${cfg.wipeBelow} Terr.)`, wl, wr, "Weniger ist besser", false),
   );
+
+  // focus territories: uptime, ownership strip, losses
+  const ownerColor = g => g === L ? cl : g === R ? cr : css("--neutral");
+  const focusNodes = A.focus.map(F => {
+    const head = el("h2", {}, `${F.name} · Uptime`);
+    if (!F.known) return [head, el("div", { class: "card muted" }, "Wird ab dem nächsten Poll gemessen.")];
+    const ftile = (lbl, num, sub) => el("div", { class: "tile uptime" }, el("div", { class: "lbl" }, lbl), el("div", { class: "num" }, num), sub ? el("div", { class: "sub" }, sub) : null);
+    const pctStr = (F.uptime * 100).toFixed(F.uptime > 0.999 || F.uptime < 0.001 ? 0 : 1) + " %";
+    const holder = F.owner === L ? nameL : F.owner === R ? nameR : (F.owner ?? "?");
+    const tiles = el("div", { class: "ftiles" },
+      ftile(`Uptime ${L}`, (F.approx ? "≥ " : "") + pctStr, `${dur(F.held)} von ${dur(F.total)} gehalten`),
+      ftile("Verloren", `${F.losses.length}×`, `davon an ${R}: ${F.losses.filter(l => l.by === R).length}×`),
+      ftile("Längster Ausfall", F.losses.length ? dur(F.longestOut) : "—", F.losses.length ? "" : "noch nie verloren"),
+      ftile("Aktuell", holder, `seit ${dt(F.since)} (${dur(F.end - F.since)})`));
+    const strip = el("div", { class: "strip", role: "img", "aria-label": `Besitzverlauf ${F.name}` });
+    for (const sg of F.segs) {
+      if (sg.to <= sg.from) continue;
+      const seg = el("div", { class: "seg", tabindex: "0", style: `flex:${sg.to - sg.from} 0 0;background:${ownerColor(sg.g)}` });
+      const nodes = () => [el("div", { style: "font-weight:700" }, sg.g ?? "kurz verloren"),
+        el("div", { class: "muted" }, `${dt(sg.from)} – ${dt(sg.to)} · ${dur(sg.to - sg.from)}`)];
+      seg.addEventListener("pointermove", e => showTip(e, nodes()));
+      seg.addEventListener("focus", e => showTip(e, nodes()));
+      seg.addEventListener("pointerleave", hideTip); seg.addEventListener("blur", hideTip);
+      strip.append(seg);
+    }
+    const lossRows = F.losses.slice().reverse().map(l => el("tr", {},
+      el("td", {}, dt(l.t)), el("td", {}, l.by ? chip(l.by) : el("span", { class: "muted" }, "unbekannt")),
+      el("td", {}, l.end ? dt(l.end) : "noch nicht zurück"),
+      el("td", { class: "n" }, (l.approx ? "≤ " : "") + dur((l.end ?? F.end) - l.t))));
+    return [head,
+      el("p", { class: "lede" }, `Wie lange ${nameL} ${F.name} gehalten hat, gemessen ab ${dt(F.w0)}. Davor gibt die API keinen Besitzverlauf her.`),
+      tiles,
+      el("div", { class: "card" },
+        el("div", { class: "legend" }, ...[[nameL, cl], [nameR, cr], ["Andere / kurz verloren", css("--neutral")]].map(([t, c]) => el("span", {}, el("i", { class: "box", style: `background:${c}` }), t))),
+        strip, el("div", { class: "strip-axis" }, el("span", {}, dt(F.w0)), el("span", {}, "jetzt")),
+        el("div", { class: "tablewrap", style: "margin-top:14px" }, el("table", {},
+          el("thead", {}, el("tr", {}, th("Verloren um"), th("An"), th("Zurück um"), th("Ausfall", 1))),
+          el("tbody", {}, ...(lossRows.length ? lossRows : [el("tr", {}, el("td", { colspan: "4", class: "muted" }, `${nameL} hält ${F.name} seit Messbeginn ununterbrochen.`))])))))];
+  });
+  document.getElementById("focus").replaceChildren(...focusNodes.flat());
 
   // territories over time
   const xs = A.pts.filter(p => p[0] >= A.start - 300);
@@ -547,7 +637,6 @@ function render(D) {
   heat.replaceChildren(...kids);
 
   // daily table
-  const th = (t, n) => el("th", { class: n ? "n" : "" }, t);
   const tdn = (v, win) => el("td", { class: "n" + (win ? " win" : "") }, v);
   const dayRows = A.days.map(d => {
     const [y, m, dd] = d.key.split("-");
@@ -580,7 +669,6 @@ function render(D) {
   document.getElementById("hq").replaceChildren(...(hqList.length ? hqList.map(hqCard) : [el("div", { class: "card muted" }, "Noch keine Territory-Daten.")]));
 
   // change log
-  const chip = g => el("span", { class: "chip" + (g === L ? " l" : g === R ? " r" : "") }, g ?? "—");
   const logRows = D.changes.changes.filter(c => c.t >= A.start).slice().reverse().map(c =>
     el("tr", { class: c.hq ? "hq" : "" },
       el("td", {}, dt(c.t)),

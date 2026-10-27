@@ -132,6 +132,14 @@ async function main() {
       const terr = await fetchJson("https://api.wynncraft.com/v3/guild/list/territory");
       const pollSec = Math.floor(Date.now() / 1000);
       const first = !changes.since;
+      const prevPollSec = state.lastPoll ? sec(state.lastPoll) : null;
+      // focus territories (config.focus) get their owner at first sight recorded, so uptime
+      // can be measured from the moment it was acquired rather than from the first change
+      changes.firstSeen ??= {};
+      for (const name of cfg.focus || []) {
+        const t = terr[name];
+        if (t && !changes.firstSeen[name]) changes.firstSeen[name] = { g: t.guild?.prefix ?? null, a: t.acquired ?? null, t: pollSec };
+      }
       const counts = { [sides[0]]: 0, [sides[1]]: 0 };
       for (const [name, t] of Object.entries(terr)) {
         const g = t.guild?.prefix ?? null;
@@ -144,6 +152,7 @@ async function main() {
         changes.changes.push({
           t: t.acquired ? sec(t.acquired) : pollSec,
           p: pollSec,
+          ...(prevPollSec ? { pp: prevPollSec } : {}),
           terr: name,
           from: prev.g,
           to: g,
