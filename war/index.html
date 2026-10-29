@@ -334,6 +334,19 @@ function analyse(cfg, series, changes, members, state) {
   }
   for (const w of Object.values(open)) wipes.push({ ...w, end: null });
   wipes.sort((a, b) => a.t - b.t);
+  // a guild can be wiped at most once per cooldown (cfg.wipeCooldownMin, from the start of
+  // the counted wipe): dips inside it fold into that wipe instead of counting again
+  const cooldown = (cfg.wipeCooldownMin ?? 60) * 60;
+  const lastWipe = {};
+  for (let i = 0; i < wipes.length; i++) {
+    const w = wipes[i], prev = lastWipe[w.side];
+    if (prev && w.t - prev.t < cooldown) {
+      prev.end = w.end == null || prev.end == null ? null : Math.max(prev.end, w.end);
+      prev.min = Math.min(prev.min, w.min);
+      prev.dips = (prev.dips || 1) + 1;
+      wipes.splice(i--, 1);
+    } else lastWipe[w.side] = w;
+  }
 
   // hourly buckets (absolute) for wars and snipes
   const hour = t => Math.floor(t / 3600) * 3600;
@@ -689,9 +702,9 @@ function render(D) {
 
   // wipes
   document.getElementById("wipe-lede").textContent =
-    `A wipe counts as soon as a guild drops below ${cfg.wipeBelow} territories. It ends once the guild holds ${cfg.wipeBelow} or more again.`;
+    `A wipe counts as soon as a guild drops below ${cfg.wipeBelow} territories, and at most once per ${cfg.wipeCooldownMin ?? 60} minutes: further drops within that hour belong to the same wipe. It ends once the guild holds ${cfg.wipeBelow} or more again after the last of those drops.`;
   const wipeRows = A.wipes.slice().reverse().map(w => el("tr", {},
-    el("td", {}, chip(w.side)), el("td", {}, dt(w.t)), el("td", {}, w.end ? dt(w.end) : "ongoing"),
+    el("td", {}, chip(w.side), w.dips ? el("span", { class: "muted" }, ` ${w.dips} drops`) : null), el("td", {}, dt(w.t)), el("td", {}, w.end ? dt(w.end) : "ongoing"),
     el("td", { class: "n" }, dur((w.end ?? A.now) - w.t)), el("td", { class: "n" }, w.min)));
   document.getElementById("t-wipes").replaceChildren(
     el("thead", {}, el("tr", {}, th("Guild"), th("Wiped at"), th("Back to ≥ " + cfg.wipeBelow), th("Duration", 1), th("Low", 1))),
@@ -721,7 +734,7 @@ const DATA_BASE = ON_PAGES ? "" : PAGES;
 if (!ON_PAGES) document.getElementById("race-link").href = "https://teslanator20.github.io/";
 // Bumped together with config.json → pageVersion whenever the page changes. An open or
 // browser-cached copy that sees a newer version reloads itself (at most every 10 min).
-const PAGE_VERSION = 4;
+const PAGE_VERSION = 5;
 function reloadIfOutdated(cfg) {
   if (!cfg?.pageVersion || cfg.pageVersion <= PAGE_VERSION) return false;
   let last = 0;
