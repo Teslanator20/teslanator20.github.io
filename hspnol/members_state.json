@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-29T15:35:26.393Z",
+  "updated": "2026-10-29T15:40:33.962Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 18,
+    "online": 17,
     "total": 138,
     "members": [
       {
@@ -45,7 +45,7 @@
         "rank": "chief",
         "joined": "2024-04-22T18:27:21.070000Z",
         "online": true,
-        "server": "EU29",
+        "server": "EU23",
         "contributed": 401903638425,
         "contributionRank": 9,
         "guildRaidsTotal": 2496
@@ -178,7 +178,7 @@
         "joined": "2026-03-05T04:37:16.337000Z",
         "online": true,
         "server": "NA20",
-        "contributed": 328984643879,
+        "contributed": 329469065899,
         "contributionRank": 10,
         "guildRaidsTotal": 1750
       },
@@ -210,7 +210,7 @@
         "rank": "captain",
         "joined": "2026-10-13T01:03:53.692000Z",
         "online": true,
-        "server": "NA18",
+        "server": "NA19",
         "contributed": 264590444319,
         "contributionRank": 13,
         "guildRaidsTotal": 1194
@@ -220,8 +220,8 @@
         "uuid": "6ea3104a-1d75-4dca-85a8-998a80f8ef57",
         "rank": "captain",
         "joined": "2026-08-29T02:14:39.146000Z",
-        "online": true,
-        "server": "NA4",
+        "online": false,
+        "server": null,
         "contributed": 255175017364,
         "contributionRank": 15,
         "guildRaidsTotal": 2292
@@ -387,7 +387,7 @@
         "joined": "2026-09-22T21:41:55.060000Z",
         "online": true,
         "server": "NA20",
-        "contributed": 79997947885,
+        "contributed": 80482369905,
         "contributionRank": 33,
         "guildRaidsTotal": 224
       },
@@ -854,6 +854,17 @@
         "guildRaidsTotal": 862
       },
       {
+        "username": "SuperGoldenMario",
+        "uuid": "9ce3dc76-1e24-4426-a439-3393fcc7c09d",
+        "rank": "recruiter",
+        "joined": "2026-10-09T00:18:28.993000Z",
+        "online": true,
+        "server": "NA20",
+        "contributed": 14697842235,
+        "contributionRank": 62,
+        "guildRaidsTotal": 1033
+      },
+      {
         "username": "REDSHEEPAPPLE",
         "uuid": "31549fae-bfa7-4159-a195-da51ced2f921",
         "rank": "recruiter",
@@ -861,19 +872,8 @@
         "online": false,
         "server": null,
         "contributed": 14637969710,
-        "contributionRank": 62,
-        "guildRaidsTotal": 37
-      },
-      {
-        "username": "SuperGoldenMario",
-        "uuid": "9ce3dc76-1e24-4426-a439-3393fcc7c09d",
-        "rank": "recruiter",
-        "joined": "2026-10-09T00:18:28.993000Z",
-        "online": true,
-        "server": "NA20",
-        "contributed": 14213420215,
         "contributionRank": 63,
-        "guildRaidsTotal": 1033
+        "guildRaidsTotal": 37
       },
       {
         "username": "Void_Glow",
@@ -924,8 +924,8 @@
         "uuid": "a10cb75f-7e7f-4b73-bc71-4567fa6f6104",
         "rank": "recruiter",
         "joined": "2026-09-05T15:06:49.144000Z",
-        "online": true,
-        "server": "NA4",
+        "online": false,
+        "server": null,
         "contributed": 10554531160,
         "contributionRank": 69,
         "guildRaidsTotal": 92
@@ -1167,7 +1167,7 @@
         "rank": "recruiter",
         "joined": "2026-09-27T15:41:32.633000Z",
         "online": true,
-        "server": "EU29",
+        "server": "EU2",
         "contributed": 1384849240,
         "contributionRank": 108,
         "guildRaidsTotal": 15
@@ -1331,8 +1331,8 @@
         "uuid": "3190e7cb-92c2-465c-9a51-dedf8a214b3c",
         "rank": "recruit",
         "joined": "2026-10-26T16:08:21.737000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU22",
         "contributed": 6297486260,
         "contributionRank": 88,
         "guildRaidsTotal": 56
@@ -1835,7 +1835,7 @@
         "rank": "chief",
         "joined": "2026-10-02T14:11:47.302000Z",
         "online": true,
-        "server": "NA4",
+        "server": "NA3",
         "contributed": 707555697849,
         "contributionRank": 77,
         "guildRaidsTotal": 7280
@@ -2121,7 +2121,7 @@
         "rank": "strategist",
         "joined": "2026-08-18T04:01:35.935000Z",
         "online": true,
-        "server": "NA26",
+        "server": "AS1",
         "contributed": 4432102399496,
         "contributionRank": 36,
         "guildRaidsTotal": 2247
@@ -2550,10 +2550,10 @@
         "rank": "captain",
         "joined": "2026-10-05T22:58:59.495000Z",
         "online": true,
-        "server": "AS4",
+        "server": "AS9",
         "contributed": 1220727962223,
         "contributionRank": 68,
-        "guildRaidsTotal": 2058
+        "guildRaidsTotal": 2059
       },
       {
         "username": "heiod",
@@ -2748,10 +2748,10 @@
         "rank": "recruiter",
         "joined": "2026-10-15T02:24:22.646000Z",
         "online": true,
-        "server": "AS4",
+        "server": "AS9",
         "contributed": 733771365417,
         "contributionRank": 75,
-        "guildRaidsTotal": 1253
+        "guildRaidsTotal": 1254
       },
       {
         "username": "ZealousAvatar",
