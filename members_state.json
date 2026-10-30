@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T14:40:31.194Z",
+  "updated": "2026-10-30T14:45:33.703Z",
   "left": {
     "name": "Sequoia",
     "prefix": "SEQ",
@@ -44,8 +44,8 @@
         "uuid": "66efb975-31b4-499e-9b46-a34980edd8ee",
         "rank": "chief",
         "joined": "2023-03-14T19:21:11.556000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU17",
         "contributed": 40201494874899,
         "contributionRank": 3,
         "guildRaidsTotal": 19647
@@ -77,8 +77,8 @@
         "uuid": "960e75cc-0f5d-4677-a6d3-f008ceda9f4c",
         "rank": "chief",
         "joined": "2025-06-26T23:08:53.862000Z",
-        "online": true,
-        "server": "EU30",
+        "online": false,
+        "server": null,
         "contributed": 27395127145320,
         "contributionRank": 6,
         "guildRaidsTotal": 0
@@ -562,7 +562,7 @@
         "rank": "strategist",
         "joined": "2025-11-26T11:29:39.325000Z",
         "online": true,
-        "server": "NA19",
+        "server": "NA18",
         "contributed": 5046193933616,
         "contributionRank": 32,
         "guildRaidsTotal": 2118
@@ -1199,8 +1199,8 @@
         "uuid": "d1ba7a43-ec06-44ed-8973-7def90166c4e",
         "rank": "captain",
         "joined": "2026-09-28T21:20:47.992000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA21",
         "contributed": 62202698712,
         "contributionRank": 115,
         "guildRaidsTotal": 33
@@ -1595,8 +1595,8 @@
         "uuid": "8078cae4-9d22-453c-9a0f-1c6b859b1d26",
         "rank": "recruit",
         "joined": "2026-10-12T16:17:56.708000Z",
-        "online": true,
-        "server": "EU6",
+        "online": false,
+        "server": null,
         "contributed": 0,
         "contributionRank": 138,
         "guildRaidsTotal": 78
@@ -1628,8 +1628,8 @@
   "right": {
     "name": "Avicia",
     "prefix": "AVO",
-    "online": 4,
-    "total": 140,
+    "online": 5,
+    "total": 141,
     "members": [
       {
         "username": "Krokofant",
@@ -2000,7 +2000,7 @@
         "rank": "strategist",
         "joined": "2025-02-14T12:05:24.203000Z",
         "online": true,
-        "server": "NA6",
+        "server": "NA9",
         "contributed": 2678653324006,
         "contributionRank": 13,
         "guildRaidsTotal": 1318
@@ -3170,6 +3170,17 @@
         "contributed": 5183558226,
         "contributionRank": 115,
         "guildRaidsTotal": 2
+      },
+      {
+        "username": "Caarola",
+        "uuid": "bf499e9c-67a2-427a-bccf-c3e1c48c5016",
+        "rank": "recruit",
+        "joined": "2026-10-30T14:40:06.480000Z",
+        "online": true,
+        "server": "EU3",
+        "contributed": 0,
+        "contributionRank": 141,
+        "guildRaidsTotal": 76
       }
     ]
   }
