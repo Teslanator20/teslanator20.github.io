@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-31T11:10:33.937Z",
+  "updated": "2026-10-31T11:15:30.777Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 8,
+    "online": 5,
     "total": 120,
     "members": [
       {
@@ -330,9 +330,9 @@
         "uuid": "544790ca-0afd-4531-823d-732dcd102253",
         "rank": "captain",
         "joined": "2026-01-18T22:16:53.484000Z",
-        "online": true,
-        "server": "NA8",
-        "contributed": 114564219352,
+        "online": false,
+        "server": null,
+        "contributed": 115048641372,
         "contributionRank": 27,
         "guildRaidsTotal": 818
       },
@@ -396,9 +396,9 @@
         "uuid": "2edd7fbb-658d-4a7b-a205-73cc23617d2d",
         "rank": "captain",
         "joined": "2026-08-13T14:24:12.975000Z",
-        "online": true,
-        "server": "NA8",
-        "contributed": 80936279501,
+        "online": false,
+        "server": null,
+        "contributed": 81420701521,
         "contributionRank": 34,
         "guildRaidsTotal": 206
       },
@@ -452,7 +452,7 @@
         "rank": "captain",
         "joined": "2026-02-18T06:02:55.945000Z",
         "online": true,
-        "server": "EU8",
+        "server": "EU3",
         "contributed": 36361454056,
         "contributionRank": 45,
         "guildRaidsTotal": 789
@@ -491,6 +491,17 @@
         "guildRaidsTotal": 206
       },
       {
+        "username": "LIFRIXE",
+        "uuid": "372c4929-2856-4d69-a957-136adcacd514",
+        "rank": "captain",
+        "joined": "2026-06-22T03:32:18.989000Z",
+        "online": true,
+        "server": "NA8",
+        "contributed": 22835117680,
+        "contributionRank": 55,
+        "guildRaidsTotal": 85
+      },
+      {
         "username": "Infernagonal",
         "uuid": "0bebcff1-60af-42e3-8056-2362037973b4",
         "rank": "captain",
@@ -498,19 +509,8 @@
         "online": false,
         "server": null,
         "contributed": 22649448590,
-        "contributionRank": 55,
-        "guildRaidsTotal": 466
-      },
-      {
-        "username": "LIFRIXE",
-        "uuid": "372c4929-2856-4d69-a957-136adcacd514",
-        "rank": "captain",
-        "joined": "2026-06-22T03:32:18.989000Z",
-        "online": true,
-        "server": "NA8",
-        "contributed": 22350695660,
         "contributionRank": 56,
-        "guildRaidsTotal": 85
+        "guildRaidsTotal": 466
       },
       {
         "username": "DoomishTheMudkip",
@@ -1023,8 +1023,8 @@
         "uuid": "ea2e295b-04ef-470b-b18e-09db1a3ecf0f",
         "rank": "recruiter",
         "joined": "2026-10-11T13:56:02.404000Z",
-        "online": true,
-        "server": "AS1",
+        "online": false,
+        "server": null,
         "contributed": 5875333930,
         "contributionRank": 86,
         "guildRaidsTotal": 36
@@ -1223,7 +1223,7 @@
         "joined": "2026-10-27T16:15:10.363000Z",
         "online": true,
         "server": "EU2",
-        "contributed": 8725077745,
+        "contributed": 8725427763,
         "contributionRank": 75,
         "guildRaidsTotal": 18
       },
@@ -1331,7 +1331,7 @@
   "right": {
     "name": "Sequoia",
     "prefix": "SEQ",
-    "online": 11,
+    "online": 12,
     "total": 148,
     "members": [
       {
@@ -1890,7 +1890,7 @@
         "rank": "strategist",
         "joined": "2025-11-26T11:29:39.325000Z",
         "online": true,
-        "server": "NA8",
+        "server": "NA4",
         "contributed": 5046193933616,
         "contributionRank": 32,
         "guildRaidsTotal": 2118
@@ -2055,7 +2055,7 @@
         "rank": "strategist",
         "joined": "2026-07-16T17:00:48.189000Z",
         "online": true,
-        "server": "NA7",
+        "server": "NA3",
         "contributed": 2418129912429,
         "contributionRank": 54,
         "guildRaidsTotal": 3803
@@ -2088,7 +2088,7 @@
         "rank": "strategist",
         "joined": "2026-08-29T13:00:30.440000Z",
         "online": true,
-        "server": "AS9",
+        "server": "AS3",
         "contributed": 1855713844908,
         "contributionRank": 61,
         "guildRaidsTotal": 1153
@@ -2341,7 +2341,7 @@
         "rank": "captain",
         "joined": "2026-09-02T02:44:39.025000Z",
         "online": true,
-        "server": "AS9",
+        "server": "AS3",
         "contributed": 1547323960734,
         "contributionRank": 65,
         "guildRaidsTotal": 830
@@ -2516,8 +2516,8 @@
         "uuid": "69ce60f8-87a2-4242-9f8d-29456ebf95f1",
         "rank": "captain",
         "joined": "2026-10-02T10:57:57.357000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "AS9",
         "contributed": 165875949210,
         "contributionRank": 105,
         "guildRaidsTotal": 74
@@ -2561,7 +2561,7 @@
         "rank": "recruiter",
         "joined": "2026-10-15T02:24:22.646000Z",
         "online": true,
-        "server": "AS9",
+        "server": "AS3",
         "contributed": 832319224340,
         "contributionRank": 74,
         "guildRaidsTotal": 1292
