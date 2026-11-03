@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T21:35:33.749Z",
+  "updated": "2026-11-03T21:40:38.807Z",
   "left": {
     "name": "Aequitas",
     "prefix": "Aeq",
@@ -22,8 +22,8 @@
         "uuid": "f05d3fa5-1c2c-4acf-8925-af1d4894d3d7",
         "rank": "chief",
         "joined": "2024-02-20T14:52:55.148000Z",
-        "online": true,
-        "server": "AS10",
+        "online": false,
+        "server": null,
         "contributed": 23911367806144,
         "contributionRank": 1,
         "guildRaidsTotal": 10321
@@ -506,8 +506,8 @@
         "uuid": "1dca485f-47a8-4b15-817e-84d7fe0140c5",
         "rank": "captain",
         "joined": "2026-08-01T18:07:53.399000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU32",
         "contributed": 904534443427,
         "contributionRank": 37,
         "guildRaidsTotal": 2322
@@ -929,6 +929,17 @@
         "contributed": 0,
         "contributionRank": 132,
         "guildRaidsTotal": 11
+      },
+      {
+        "username": "femboyrouter",
+        "uuid": "1ee7068f-5956-41a0-92ca-7316f983d8b2",
+        "rank": "recruiter",
+        "joined": "2026-11-02T21:47:28.593000Z",
+        "online": true,
+        "server": "EU3",
+        "contributed": 0,
+        "contributionRank": 142,
+        "guildRaidsTotal": 6
       },
       {
         "username": "Astrike",
@@ -1556,17 +1567,6 @@
         "contributed": 0,
         "contributionRank": 141,
         "guildRaidsTotal": 1
-      },
-      {
-        "username": "femboyrouter",
-        "uuid": "1ee7068f-5956-41a0-92ca-7316f983d8b2",
-        "rank": "recruit",
-        "joined": "2026-11-02T21:47:28.593000Z",
-        "online": true,
-        "server": "EU3",
-        "contributed": 0,
-        "contributionRank": 142,
-        "guildRaidsTotal": 6
       },
       {
         "username": "catgirlrouter",
@@ -3133,7 +3133,7 @@
         "rank": "recruit",
         "joined": "2026-11-02T03:44:39.677000Z",
         "online": true,
-        "server": "EU32",
+        "server": "EU19",
         "contributed": 8058151,
         "contributionRank": 124,
         "guildRaidsTotal": 0
