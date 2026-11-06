@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-06T16:05:25.539Z",
+  "updated": "2026-11-06T16:10:32.877Z",
   "left": {
     "name": "Aequitas",
     "prefix": "Aeq",
-    "online": 6,
+    "online": 3,
     "total": 144,
     "members": [
       {
@@ -22,8 +22,8 @@
         "uuid": "f05d3fa5-1c2c-4acf-8925-af1d4894d3d7",
         "rank": "chief",
         "joined": "2024-02-20T14:52:55.148000Z",
-        "online": true,
-        "server": "AS6",
+        "online": false,
+        "server": null,
         "contributed": 24087608785828,
         "contributionRank": 1,
         "guildRaidsTotal": 10389
@@ -506,8 +506,8 @@
         "uuid": "1dca485f-47a8-4b15-817e-84d7fe0140c5",
         "rank": "captain",
         "joined": "2026-08-01T18:07:53.399000Z",
-        "online": true,
-        "server": "EU5",
+        "online": false,
+        "server": null,
         "contributed": 904534444427,
         "contributionRank": 37,
         "guildRaidsTotal": 2322
@@ -749,7 +749,7 @@
         "rank": "recruiter",
         "joined": "2026-10-01T19:15:44.893000Z",
         "online": true,
-        "server": "EU31",
+        "server": "AS4",
         "contributed": 155656956382,
         "contributionRank": 55,
         "guildRaidsTotal": 62
@@ -1067,8 +1067,8 @@
         "uuid": "6f569620-e76a-444f-8a9b-95f8d324097f",
         "rank": "recruit",
         "joined": "2026-10-24T09:31:39.050000Z",
-        "online": true,
-        "server": "EU3",
+        "online": false,
+        "server": null,
         "contributed": 2591779113,
         "contributionRank": 91,
         "guildRaidsTotal": 23
@@ -1107,6 +1107,17 @@
         "guildRaidsTotal": 0
       },
       {
+        "username": "Ljubo7",
+        "uuid": "5e7252b9-4fef-435f-ac2c-8a8fa2072d4f",
+        "rank": "recruit",
+        "joined": "2026-10-22T02:20:20.238000Z",
+        "online": true,
+        "server": "EU24",
+        "contributed": 59182337,
+        "contributionRank": 96,
+        "guildRaidsTotal": 0
+      },
+      {
         "username": "EuropeanOnione",
         "uuid": "51bfb934-41ef-434a-8697-8c9f4bfcb634",
         "rank": "recruit",
@@ -1114,17 +1125,6 @@
         "online": false,
         "server": null,
         "contributed": 58173677,
-        "contributionRank": 96,
-        "guildRaidsTotal": 0
-      },
-      {
-        "username": "Ljubo7",
-        "uuid": "5e7252b9-4fef-435f-ac2c-8a8fa2072d4f",
-        "rank": "recruit",
-        "joined": "2026-10-22T02:20:20.238000Z",
-        "online": true,
-        "server": "EU24",
-        "contributed": 57285336,
         "contributionRank": 97,
         "guildRaidsTotal": 0
       },
@@ -1595,7 +1595,7 @@
   "right": {
     "name": "Avicia",
     "prefix": "AVO",
-    "online": 5,
+    "online": 7,
     "total": 142,
     "members": [
       {
@@ -1889,11 +1889,11 @@
         "uuid": "7635e792-ac7b-4065-888b-f6bbb69b2234",
         "rank": "chief",
         "joined": "2024-04-22T14:44:49.392000Z",
-        "online": true,
-        "server": "NA6",
+        "online": false,
+        "server": null,
         "contributed": 261414047685,
         "contributionRank": 55,
-        "guildRaidsTotal": 260
+        "guildRaidsTotal": 0
       },
       {
         "username": "Ingwee",
@@ -2890,8 +2890,8 @@
         "uuid": "f3c32d1c-1c0c-437a-9957-f005dcf92e1b",
         "rank": "recruiter",
         "joined": "2026-08-27T16:46:13.046000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU28",
         "contributed": 25917791130,
         "contributionRank": 103,
         "guildRaidsTotal": 10
@@ -2978,8 +2978,8 @@
         "uuid": "27c7e2d0-46fa-475b-9302-a3e4d8605a0a",
         "rank": "recruiter",
         "joined": "2021-11-04T21:34:52.007000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA8",
         "contributed": 242812130,
         "contributionRank": 120,
         "guildRaidsTotal": 0
@@ -3143,8 +3143,8 @@
         "uuid": "656ddcd9-670b-41a1-9dc2-a67658fdc840",
         "rank": "recruit",
         "joined": "2026-11-02T03:44:39.677000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA18",
         "contributed": 8397484,
         "contributionRank": 124,
         "guildRaidsTotal": 0
