@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-07T12:10:33.841Z",
+  "updated": "2026-11-07T12:15:30.490Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 6,
+    "online": 5,
     "total": 124,
     "members": [
       {
@@ -165,8 +165,8 @@
         "uuid": "aab7703a-f77a-4150-ac31-004d57bd4799",
         "rank": "captain",
         "joined": "2026-07-28T18:28:41.119000Z",
-        "online": true,
-        "server": "EU4",
+        "online": false,
+        "server": null,
         "contributed": 711612273389,
         "contributionRank": 4,
         "guildRaidsTotal": 2030
@@ -286,8 +286,8 @@
         "uuid": "35ec7b7c-60ad-4c05-9ebf-03c85dae2839",
         "rank": "captain",
         "joined": "2026-07-21T00:48:11.864000Z",
-        "online": true,
-        "server": "NA2",
+        "online": false,
+        "server": null,
         "contributed": 167055852525,
         "contributionRank": 22,
         "guildRaidsTotal": 579
@@ -727,7 +727,7 @@
         "rank": "recruiter",
         "joined": "2026-09-24T02:55:33.586000Z",
         "online": true,
-        "server": "EU6",
+        "server": "NA8",
         "contributed": 51804061532,
         "contributionRank": 39,
         "guildRaidsTotal": 188
@@ -876,6 +876,17 @@
         "guildRaidsTotal": 864
       },
       {
+        "username": "BigStami",
+        "uuid": "62cb0c30-5915-4b63-9c69-ea2dacce7e31",
+        "rank": "recruiter",
+        "joined": "2026-10-27T16:15:10.363000Z",
+        "online": true,
+        "server": "AS4",
+        "contributed": 14094587592,
+        "contributionRank": 64,
+        "guildRaidsTotal": 27
+      },
+      {
         "username": "Void_Glow",
         "uuid": "4313b04c-a698-417b-b7fb-f7d111926bb1",
         "rank": "recruiter",
@@ -883,27 +894,16 @@
         "online": false,
         "server": null,
         "contributed": 13794293973,
-        "contributionRank": 64,
-        "guildRaidsTotal": 50
-      },
-      {
-        "username": "BigStami",
-        "uuid": "62cb0c30-5915-4b63-9c69-ea2dacce7e31",
-        "rank": "recruiter",
-        "joined": "2026-10-27T16:15:10.363000Z",
-        "online": true,
-        "server": "AS4",
-        "contributed": 13537502263,
         "contributionRank": 65,
-        "guildRaidsTotal": 27
+        "guildRaidsTotal": 50
       },
       {
         "username": "mattdracco7",
         "uuid": "a10cb75f-7e7f-4b73-bc71-4567fa6f6104",
         "rank": "recruiter",
         "joined": "2026-09-05T15:06:49.144000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "AS6",
         "contributed": 13122060397,
         "contributionRank": 66,
         "guildRaidsTotal": 97
@@ -1375,7 +1375,7 @@
   "right": {
     "name": "Sequoia",
     "prefix": "SEQ",
-    "online": 9,
+    "online": 8,
     "total": 146,
     "members": [
       {
@@ -1816,7 +1816,7 @@
         "server": "EU21",
         "contributed": 18251308513746,
         "contributionRank": 11,
-        "guildRaidsTotal": 7087
+        "guildRaidsTotal": 7088
       },
       {
         "username": "penguinloverx3",
@@ -2135,7 +2135,7 @@
         "server": "EU21",
         "contributed": 1904957648055,
         "contributionRank": 59,
-        "guildRaidsTotal": 1172
+        "guildRaidsTotal": 1173
       },
       {
         "username": "CDara",
@@ -2208,8 +2208,8 @@
         "uuid": "dfe48b48-3216-4faa-9e87-234e5676a1f9",
         "rank": "strategist",
         "joined": "2026-09-13T11:08:25.317000Z",
-        "online": true,
-        "server": "NA5",
+        "online": false,
+        "server": null,
         "contributed": 645352999137,
         "contributionRank": 82,
         "guildRaidsTotal": 319
@@ -2518,7 +2518,7 @@
         "joined": "2026-10-02T10:57:57.357000Z",
         "online": true,
         "server": "AS8",
-        "contributed": 191793765238,
+        "contributed": 191793765248,
         "contributionRank": 103,
         "guildRaidsTotal": 84
       },
@@ -2564,7 +2564,7 @@
         "server": "EU21",
         "contributed": 1332578500687,
         "contributionRank": 67,
-        "guildRaidsTotal": 1485
+        "guildRaidsTotal": 1486
       },
       {
         "username": "ZealousAvatar",
