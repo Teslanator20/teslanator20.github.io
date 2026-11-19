@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-19T22:25:28.133Z",
+  "updated": "2026-11-19T22:30:46.142Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 15,
+    "online": 13,
     "total": 127,
     "members": [
       {
@@ -90,9 +90,9 @@
         "joined": "2026-02-18T03:07:40.370000Z",
         "online": true,
         "server": "NA25",
-        "contributed": 675094545679,
+        "contributed": 675651631008,
         "contributionRank": 5,
-        "guildRaidsTotal": 2875
+        "guildRaidsTotal": 2876
       },
       {
         "username": "MeatyLeopard",
@@ -156,9 +156,9 @@
         "joined": "2026-09-07T18:43:02.253000Z",
         "online": true,
         "server": "NA25",
-        "contributed": 1073602659345,
+        "contributed": 1074159744674,
         "contributionRank": 2,
-        "guildRaidsTotal": 4163
+        "guildRaidsTotal": 4164
       },
       {
         "username": "SharZz",
@@ -166,7 +166,7 @@
         "rank": "captain",
         "joined": "2026-07-28T18:28:41.119000Z",
         "online": true,
-        "server": "EU4",
+        "server": "EU30",
         "contributed": 907219317586,
         "contributionRank": 4,
         "guildRaidsTotal": 2385
@@ -199,18 +199,18 @@
         "rank": "captain",
         "joined": "2026-10-13T01:03:53.692000Z",
         "online": true,
-        "server": "EU5",
+        "server": "EU30",
         "contributed": 343078010276,
         "contributionRank": 12,
-        "guildRaidsTotal": 1345
+        "guildRaidsTotal": 1346
       },
       {
         "username": "Bynt",
         "uuid": "6ea3104a-1d75-4dca-85a8-998a80f8ef57",
         "rank": "captain",
         "joined": "2026-08-29T02:14:39.146000Z",
-        "online": true,
-        "server": "NA8",
+        "online": false,
+        "server": null,
         "contributed": 342661634800,
         "contributionRank": 13,
         "guildRaidsTotal": 2456
@@ -330,8 +330,8 @@
         "uuid": "fd62ffe9-c897-41ef-ab2b-6153cb4ad350",
         "rank": "captain",
         "joined": "2026-07-05T06:37:37.391000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA27",
         "contributed": 143925096955,
         "contributionRank": 27,
         "guildRaidsTotal": 390
@@ -374,19 +374,19 @@
         "uuid": "132c2b11-60c2-4cb5-a1e6-2891ed3f06f0",
         "rank": "captain",
         "joined": "2025-10-29T21:04:26.410000Z",
-        "online": true,
-        "server": "NA25",
-        "contributed": 124354374127,
+        "online": false,
+        "server": null,
+        "contributed": 124911459456,
         "contributionRank": 32,
-        "guildRaidsTotal": 693
+        "guildRaidsTotal": 694
       },
       {
         "username": "CacklingCactus",
         "uuid": "51d80555-44de-43ae-8684-eb09cb9e625a",
         "rank": "captain",
         "joined": "2026-08-12T02:41:10.730000Z",
-        "online": true,
-        "server": "EU5",
+        "online": false,
+        "server": null,
         "contributed": 103330898484,
         "contributionRank": 35,
         "guildRaidsTotal": 261
@@ -696,7 +696,7 @@
         "online": false,
         "server": null,
         "contributed": 2068103389,
-        "contributionRank": 102,
+        "contributionRank": 103,
         "guildRaidsTotal": 192
       },
       {
@@ -1129,6 +1129,17 @@
         "guildRaidsTotal": 6
       },
       {
+        "username": "Cheddar_106",
+        "uuid": "2b823834-8d0a-4e9d-8cfb-02d7ca5f4a01",
+        "rank": "recruiter",
+        "joined": "2026-11-08T04:14:29.784000Z",
+        "online": true,
+        "server": "NA25",
+        "contributed": 2228341316,
+        "contributionRank": 102,
+        "guildRaidsTotal": 4
+      },
+      {
         "username": "FireWolfPhoenix",
         "uuid": "ad446dea-a166-4a53-b2ea-bb93ba93731e",
         "rank": "recruiter",
@@ -1136,7 +1147,7 @@
         "online": false,
         "server": null,
         "contributed": 1814019120,
-        "contributionRank": 103,
+        "contributionRank": 104,
         "guildRaidsTotal": 4
       },
       {
@@ -1146,17 +1157,6 @@
         "joined": "2026-11-08T03:16:13.449000Z",
         "online": false,
         "server": null,
-        "contributed": 1671255987,
-        "contributionRank": 104,
-        "guildRaidsTotal": 3
-      },
-      {
-        "username": "Cheddar_106",
-        "uuid": "2b823834-8d0a-4e9d-8cfb-02d7ca5f4a01",
-        "rank": "recruiter",
-        "joined": "2026-11-08T04:14:29.784000Z",
-        "online": true,
-        "server": "NA25",
         "contributed": 1671255987,
         "contributionRank": 105,
         "guildRaidsTotal": 3
@@ -1408,7 +1408,7 @@
   "right": {
     "name": "Sequoia",
     "prefix": "SEQ",
-    "online": 12,
+    "online": 11,
     "total": 146,
     "members": [
       {
@@ -2154,8 +2154,8 @@
         "rank": "strategist",
         "joined": "2026-09-13T11:08:25.317000Z",
         "online": true,
-        "server": "EU21",
-        "contributed": 798267966804,
+        "server": "EU5",
+        "contributed": 800859745917,
         "contributionRank": 71,
         "guildRaidsTotal": 380
       },
@@ -2264,7 +2264,7 @@
         "rank": "strategist",
         "joined": "2026-10-16T17:39:42.473000Z",
         "online": true,
-        "server": "NA25",
+        "server": "NA3",
         "contributed": 90712268955,
         "contributionRank": 108,
         "guildRaidsTotal": 370
@@ -2560,8 +2560,8 @@
         "uuid": "819206a5-1fac-447e-8aff-0d6243aaecbc",
         "rank": "recruiter",
         "joined": "2026-09-15T21:16:32.325000Z",
-        "online": true,
-        "server": "EU9",
+        "online": false,
+        "server": null,
         "contributed": 814177488246,
         "contributionRank": 70,
         "guildRaidsTotal": 1013
