@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-19T18:55:27.882Z",
+  "updated": "2026-11-19T19:00:54.950Z",
   "left": {
     "name": "Aequitas",
     "prefix": "Aeq",
-    "online": 1,
+    "online": 0,
     "total": 143,
     "members": [
       {
@@ -22,8 +22,8 @@
         "uuid": "f05d3fa5-1c2c-4acf-8925-af1d4894d3d7",
         "rank": "chief",
         "joined": "2024-02-20T14:52:55.148000Z",
-        "online": true,
-        "server": "AS3",
+        "online": false,
+        "server": null,
         "contributed": 24613739945767,
         "contributionRank": 1,
         "guildRaidsTotal": 10592
@@ -1584,8 +1584,8 @@
   "right": {
     "name": "Avicia",
     "prefix": "AVO",
-    "online": 8,
-    "total": 148,
+    "online": 12,
+    "total": 149,
     "members": [
       {
         "username": "Krokofant",
@@ -1757,8 +1757,8 @@
         "uuid": "a5356d2b-a62a-4aad-8b2a-9d658db42a50",
         "rank": "chief",
         "joined": "2025-02-08T16:17:14.308000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU2",
         "contributed": 1114941006521,
         "contributionRank": 22,
         "guildRaidsTotal": 644
@@ -1801,8 +1801,8 @@
         "uuid": "19e3b0c9-0bb6-42cf-9813-5215a426ab38",
         "rank": "chief",
         "joined": "2025-09-14T13:48:38.719000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU27",
         "contributed": 742921394925,
         "contributionRank": 31,
         "guildRaidsTotal": 501
@@ -2439,8 +2439,8 @@
         "uuid": "20c2c5af-9162-46f0-94fa-c27adc808642",
         "rank": "captain",
         "joined": "2026-08-27T13:13:01.208000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "NA2",
         "contributed": 137620083464,
         "contributionRank": 70,
         "guildRaidsTotal": 72
@@ -2792,7 +2792,7 @@
         "rank": "recruiter",
         "joined": "2026-10-31T14:00:23.002000Z",
         "online": true,
-        "server": "NA8",
+        "server": "EU23",
         "contributed": 54430691372,
         "contributionRank": 91,
         "guildRaidsTotal": 21
@@ -3214,6 +3214,17 @@
         "contributed": 0,
         "contributionRank": 148,
         "guildRaidsTotal": 1298
+      },
+      {
+        "username": "Xikys",
+        "uuid": "7bf6108b-e08e-4523-8efa-f055a0847204",
+        "rank": "recruit",
+        "joined": "2026-11-19T18:53:39.999000Z",
+        "online": true,
+        "server": "NA21",
+        "contributed": 0,
+        "contributionRank": 149,
+        "guildRaidsTotal": 302
       }
     ]
   }
