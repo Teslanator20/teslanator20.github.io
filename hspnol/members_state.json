@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-22T16:35:29.090Z",
+  "updated": "2026-11-22T16:40:34.924Z",
   "left": {
     "name": "Hesperides",
     "prefix": "HSP",
-    "online": 23,
+    "online": 21,
     "total": 130,
     "members": [
       {
@@ -188,7 +188,7 @@
         "rank": "captain",
         "joined": "2026-10-13T01:03:53.692000Z",
         "online": true,
-        "server": "NA24",
+        "server": "NA22",
         "contributed": 362799027959,
         "contributionRank": 11,
         "guildRaidsTotal": 1378
@@ -210,7 +210,7 @@
         "rank": "captain",
         "joined": "2026-08-29T02:14:39.146000Z",
         "online": true,
-        "server": "NA24",
+        "server": "NA22",
         "contributed": 359402048969,
         "contributionRank": 13,
         "guildRaidsTotal": 2484
@@ -231,8 +231,8 @@
         "uuid": "d0e1714a-ce79-4746-9c5a-379fbff401ad",
         "rank": "captain",
         "joined": "2026-08-19T00:31:30.310000Z",
-        "online": true,
-        "server": "EU28",
+        "online": false,
+        "server": null,
         "contributed": 250095354273,
         "contributionRank": 16,
         "guildRaidsTotal": 1569
@@ -342,7 +342,7 @@
         "rank": "captain",
         "joined": "2026-09-19T12:48:26.071000Z",
         "online": true,
-        "server": "NA24",
+        "server": "NA22",
         "contributed": 138272251894,
         "contributionRank": 29,
         "guildRaidsTotal": 1217
@@ -1244,8 +1244,8 @@
         "rank": "recruit",
         "joined": "2026-11-17T04:40:03.295000Z",
         "online": true,
-        "server": "EU34",
-        "contributed": 32812325906,
+        "server": "EU7",
+        "contributed": 33452974039,
         "contributionRank": 55,
         "guildRaidsTotal": 2427
       },
@@ -1266,7 +1266,7 @@
         "rank": "recruit",
         "joined": "2026-11-21T20:10:27.897000Z",
         "online": true,
-        "server": "NA24",
+        "server": "NA22",
         "contributed": 5125185064,
         "contributionRank": 96,
         "guildRaidsTotal": 10
@@ -1355,8 +1355,19 @@
         "joined": "2026-11-20T02:22:50.532000Z",
         "online": true,
         "server": "NA23",
-        "contributed": 9210,
+        "contributed": 9264,
         "contributionRank": 121,
+        "guildRaidsTotal": 0
+      },
+      {
+        "username": "Luschgend",
+        "uuid": "44157f17-d92a-4370-9e7e-c15a18f1e4a4",
+        "rank": "recruit",
+        "joined": "2026-11-22T16:21:56.850000Z",
+        "online": true,
+        "server": "NA5",
+        "contributed": 2811,
+        "contributionRank": 124,
         "guildRaidsTotal": 0
       },
       {
@@ -1367,29 +1378,7 @@
         "online": false,
         "server": null,
         "contributed": 2297,
-        "contributionRank": 124,
-        "guildRaidsTotal": 0
-      },
-      {
-        "username": "Luschgend",
-        "uuid": "44157f17-d92a-4370-9e7e-c15a18f1e4a4",
-        "rank": "recruit",
-        "joined": "2026-11-22T16:21:56.850000Z",
-        "online": true,
-        "server": "NA5",
-        "contributed": 1078,
         "contributionRank": 125,
-        "guildRaidsTotal": 0
-      },
-      {
-        "username": "Grimm_Lockwood",
-        "uuid": "b202c66f-3199-41c1-b986-bb3f9dc11948",
-        "rank": "recruit",
-        "joined": "2026-11-22T15:46:42.851000Z",
-        "online": true,
-        "server": "EU2",
-        "contributed": 368,
-        "contributionRank": 126,
         "guildRaidsTotal": 0
       },
       {
@@ -1399,7 +1388,18 @@
         "joined": "2026-11-22T16:27:37.222000Z",
         "online": true,
         "server": "NA21",
-        "contributed": 186,
+        "contributed": 388,
+        "contributionRank": 126,
+        "guildRaidsTotal": 0
+      },
+      {
+        "username": "Grimm_Lockwood",
+        "uuid": "b202c66f-3199-41c1-b986-bb3f9dc11948",
+        "rank": "recruit",
+        "joined": "2026-11-22T15:46:42.851000Z",
+        "online": false,
+        "server": null,
+        "contributed": 368,
         "contributionRank": 127,
         "guildRaidsTotal": 0
       },
@@ -1441,7 +1441,7 @@
   "right": {
     "name": "Sequoia",
     "prefix": "SEQ",
-    "online": 9,
+    "online": 10,
     "total": 149,
     "members": [
       {
@@ -1768,8 +1768,8 @@
         "uuid": "cc93d0cd-5c73-4dde-bb0f-f65902cf9c89",
         "rank": "chief",
         "joined": "2026-10-02T14:11:47.302000Z",
-        "online": false,
-        "server": null,
+        "online": true,
+        "server": "EU5",
         "contributed": 891572014872,
         "contributionRank": 68,
         "guildRaidsTotal": 7351
