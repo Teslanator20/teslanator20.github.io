@@ -104623,112 +104623,6 @@
       }
     },
     {
-      "ts": "2026-11-21T03:05:23.299Z",
-      "season": 33,
-      "left": {
-        "name": "Hesperides",
-        "prefix": "HSP",
-        "uuid": "936a9322-9b4d-4f6e-a145-173cafb57ca4",
-        "level": 120,
-        "xpPercent": 0,
-        "territories": 0,
-        "wars": 738,
-        "raids": 39281,
-        "seasonNumber": 33,
-        "seasonSr": 1931240,
-        "online": 19,
-        "memberCount": 126,
-        "perRaid": {
-          "grootslang": {
-            "rank": 13,
-            "sr": 1709900,
-            "completions": 4278,
-            "gambits": 44330
-          },
-          "nameless": {
-            "rank": 7,
-            "sr": 3257160,
-            "completions": 8093,
-            "gambits": 85398
-          },
-          "colossus": {
-            "rank": 7,
-            "sr": 2676290,
-            "completions": 6456,
-            "gambits": 71127
-          },
-          "orphion": {
-            "rank": 2,
-            "sr": 7338870,
-            "completions": 17856,
-            "gambits": 194082
-          },
-          "fruma": {
-            "rank": 8,
-            "sr": 1022840,
-            "completions": 2598,
-            "gambits": 26637
-          }
-        },
-        "aggDamageDealt": 3460983753204,
-        "aggDamageTaken": 10414184840,
-        "aggDeaths": 59101,
-        "aggGambits": 491904,
-        "aggHealed": 351227112303
-      },
-      "right": {
-        "name": "Sequoia",
-        "prefix": "SEQ",
-        "uuid": "ee860b7c-9a1d-49cf-9f19-ab673ba0f23b",
-        "level": 270,
-        "xpPercent": 4,
-        "territories": 59,
-        "wars": 186350,
-        "raids": 182638,
-        "seasonNumber": 33,
-        "seasonSr": 6188198,
-        "online": 8,
-        "memberCount": 146,
-        "perRaid": {
-          "grootslang": {
-            "rank": 1,
-            "sr": 20448860,
-            "completions": 47852,
-            "gambits": 552063
-          },
-          "nameless": {
-            "rank": 1,
-            "sr": 28251300,
-            "completions": 67872,
-            "gambits": 755389
-          },
-          "colossus": {
-            "rank": 1,
-            "sr": 12017790,
-            "completions": 29322,
-            "gambits": 318966
-          },
-          "orphion": {
-            "rank": 1,
-            "sr": 8526670,
-            "completions": 20252,
-            "gambits": 229018
-          },
-          "fruma": {
-            "rank": 1,
-            "sr": 7284290,
-            "completions": 17340,
-            "gambits": 196014
-          }
-        },
-        "aggDamageDealt": 6568387748083,
-        "aggDamageTaken": 15624732001,
-        "aggDeaths": 151703,
-        "aggGambits": 976691,
-        "aggHealed": 899936425617
-      }
-    },
-    {
       "ts": "2026-11-21T03:10:34.958Z",
       "season": 33,
       "left": {
@@ -197053,9 +196947,115 @@
         "aggGambits": 976197,
         "aggHealed": 878475792279
       }
+    },
+    {
+      "ts": "2026-11-24T03:05:28.311Z",
+      "season": 33,
+      "left": {
+        "name": "Hesperides",
+        "prefix": "HSP",
+        "uuid": "936a9322-9b4d-4f6e-a145-173cafb57ca4",
+        "level": 120,
+        "xpPercent": 43,
+        "territories": 0,
+        "wars": 742,
+        "raids": 39742,
+        "seasonNumber": 33,
+        "seasonSr": 2091284,
+        "online": 20,
+        "memberCount": 139,
+        "perRaid": {
+          "grootslang": {
+            "rank": 13,
+            "sr": 1723150,
+            "completions": 4314,
+            "gambits": 44659
+          },
+          "nameless": {
+            "rank": 7,
+            "sr": 3258320,
+            "completions": 8096,
+            "gambits": 85427
+          },
+          "colossus": {
+            "rank": 7,
+            "sr": 2705130,
+            "completions": 6527,
+            "gambits": 71893
+          },
+          "orphion": {
+            "rank": 2,
+            "sr": 7463880,
+            "completions": 18172,
+            "gambits": 197336
+          },
+          "fruma": {
+            "rank": 8,
+            "sr": 1034830,
+            "completions": 2631,
+            "gambits": 26942
+          }
+        },
+        "aggDamageDealt": 3523096168533,
+        "aggDamageTaken": 10616918284,
+        "aggDeaths": 60090,
+        "aggGambits": 501361,
+        "aggHealed": 357665615816
+      },
+      "right": {
+        "name": "Sequoia",
+        "prefix": "SEQ",
+        "uuid": "ee860b7c-9a1d-49cf-9f19-ab673ba0f23b",
+        "level": 270,
+        "xpPercent": 18,
+        "territories": 59,
+        "wars": 186574,
+        "raids": 182891,
+        "seasonNumber": 33,
+        "seasonSr": 6675311,
+        "online": 8,
+        "memberCount": 149,
+        "perRaid": {
+          "grootslang": {
+            "rank": 1,
+            "sr": 20491600,
+            "completions": 47958,
+            "gambits": 553190
+          },
+          "nameless": {
+            "rank": 1,
+            "sr": 28254640,
+            "completions": 67880,
+            "gambits": 755479
+          },
+          "colossus": {
+            "rank": 1,
+            "sr": 12030850,
+            "completions": 29354,
+            "gambits": 319316
+          },
+          "orphion": {
+            "rank": 1,
+            "sr": 8531250,
+            "completions": 20263,
+            "gambits": 229140
+          },
+          "fruma": {
+            "rank": 1,
+            "sr": 7322820,
+            "completions": 17435,
+            "gambits": 197035
+          }
+        },
+        "aggDamageDealt": 6572332561635,
+        "aggDamageTaken": 15648068922,
+        "aggDeaths": 151316,
+        "aggGambits": 976197,
+        "aggHealed": 878475792279
+      }
     }
   ],
-  "updated": "2026-11-24T03:00:58.741Z",
+  "updated": "2026-11-24T03:05:28.311Z",
   "config": {
     "left": {
       "name": "Hesperides",
